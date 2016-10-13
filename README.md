@@ -2,6 +2,7 @@
 
 # Lista de requisitos
 - Separar Admin de Monitor
+- Instalador y exe de ejecución
 
 Para el Admin:
 - Crear, modificar y borrar recetas (BDD)

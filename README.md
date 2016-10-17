@@ -1,6 +1,6 @@
 # process-monitoring
 
-# Lista de requisitos
+# Lista de requisitos (1.5 h)
 - Separar Admin de Monitor
 - Instalador y exe de ejecución
 
@@ -20,18 +20,13 @@ Para el Monitor:
 - Avance manual del proceso (indicación que las acciones requeridas fueron realizadas)
 - Loggeo de datos
 
-# Desafíos técnicos
-- Arquitectura? Propuesta: cliente-servidor (con el objetivo de tener varios clientes monitoreando el proceso)
-- Base de datos?
-- Tecnología? (Polymer?)
-
-# Preparado de scaffold (1h)
+# Preparado de scaffold (1 h)
 - Install nvm https://github.com/creationix/nvm (optional)
 - Install latest npm (if nvm: `nvm use node`)
 - Install yeoman `npm install -g yo`
 - Install bower `npm install -g bower`
 - Install grunt `npm install -g grunt`
-- Install following generators (`npm install -g generator-ng-fullstack`) 
+- Install following generator `npm install -g generator-ng-fullstack` https://github.com/ericmdantas/generator-ng-fullstack
 - `yo ng-fullstack` with options:
 	* Stack: fullstack
 	* Server side: node
@@ -40,6 +35,9 @@ Para el Monitor:
 	* Https: Yes
 	* Different static server: No
 
-# Clonar y ejecutar proyecto
+# Clonar y ejecutar proyecto (0h)
 - Ejecutar `npm install` y `bower install`
 - Para ejecutar servidor, `npm run dev`
+
+# Preparado de muestra piloto (ver issues)
+- Hasta contar con un mejor tracking de horas, indicarlas en cada issue

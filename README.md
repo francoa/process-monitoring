@@ -24,3 +24,22 @@ Para el Monitor:
 - Arquitectura? Propuesta: cliente-servidor (con el objetivo de tener varios clientes monitoreando el proceso)
 - Base de datos?
 - Tecnología? (Polymer?)
+
+# Preparado de scaffold (1h)
+- Install nvm https://github.com/creationix/nvm (optional)
+- Install latest npm (if nvm: `nvm use node`)
+- Install yeoman `npm install -g yo`
+- Install bower `npm install -g bower`
+- Install grunt `npm install -g grunt`
+- Install following generators (`npm install -g generator-ng-fullstack`) 
+- `yo ng-fullstack` with options:
+	* Stack: fullstack
+	* Server side: node
+	* Client side: ng1
+	* Transpiler: node
+	* Https: Yes
+	* Different static server: No
+
+# Clonar y ejecutar proyecto
+- Ejecutar `npm install` y `bower install`
+- Para ejecutar servidor, `npm run dev`

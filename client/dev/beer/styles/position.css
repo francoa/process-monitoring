@@ -1,0 +1,22 @@
+.beer-panel {
+  width: 100%;
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 0 25px 25px;
+}
+
+.beers-container .form-control {
+  font-size: 17px;
+  border-radius: 0;
+}
+
+.beer-in-beers {
+  position: relative;
+}
+
+.beer-done {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 8px 15px;
+}

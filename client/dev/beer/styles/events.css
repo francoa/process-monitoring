@@ -1,0 +1,13 @@
+.beer-in-beers:hover .beer-done {
+  opacity: 1;
+}
+
+.beer-done:hover {
+  background-color: red;
+}
+
+
+.beer-done:hover {
+  background-color: rgba(228, 43, 43, 1);
+  color: #fff;
+}

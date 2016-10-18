@@ -1,4 +1,4 @@
-import Todo from '../../../server/api/todo/dao/todo-dao';
+import Beer from '../../../server/api/beer/dao/beer-dao';
 import dbJson from './db.json';
 
 exports.setupMongoose = (mongoose) => {
@@ -7,12 +7,12 @@ exports.setupMongoose = (mongoose) => {
   mongoose.connection.on('error', () => {});
 }
 
-exports.createTodos = () => {
+exports.createBeers = () => {
     let _array = [];
 
     for (let i = 0; i < 10; i++) {
-        _array.push({_id: '507c7f79bcf86cd7994f6c'+ (i + 10), todoMessage: 'aaaaaaa'+i});
+        _array.push({_id: '507c7f79bcf86cd7994f6c'+ (i + 10), beerMessage: 'aaaaaaa'+i});
     }
 
-    return Todo.create(_array);
+    return Beer.create(_array);
 }

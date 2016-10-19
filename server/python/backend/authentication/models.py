@@ -32,6 +32,7 @@ class AccountManager(BaseUserManager):
 
         return account
 
+
 # Account Model
 class Account(AbstractBaseUser):
     # We use the email in the USERNAME_FIELD to login

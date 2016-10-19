@@ -40,15 +40,55 @@ Now generate the migrations for the authentication app and apply them:
 ````bash
 python manage.py makemigrations
 python manage.py migrate
-```
-------------------------------------------------------------
-10 Create a superuser == admin
+````
+----
+10 Create a superuser, that is to say an admin user
 Run:
 ````bash
 python manage.py createsuperuser
 ````
 11 Open Django's shell:
-````
+````bash
 python manage.py shell
 ````
+We can have access to attributes of Account object
+````python
+>>> from authentication.models import Account
+>>> a = Account.objects.latest('created_at')
+>>> a
+>>> a.email
+>>> a.username
+````
+----
+> Serializing the Account Model:
+ This is the process of transforming Django models to JSON.
+ To this purpose we use djangorestframework
+````bash
+pip3 install djangorestframework
+````
+Add 'rest_framework' to your INSTALLED_APPS setting.
+````python
+INSTALLED_APPS = (
+    ...
+    'rest_framework',
+)
+````
+
+12 The serializer is called AccountSerializer. 
+Create the file authentication/serializers.py and define AccountSerializer class
+
+13 Check if Account object is serialized JSON.
+Open Django shell again: ````python manage.py shell ````
+Run:
+````python
+>>> from authentication.models import Account
+>>> from authentication.serializers import AccountSerializer
+>>> account = Account.objects.latest('created_at')
+>>> serialized_account = AccountSerializer(account)
+>>> serialized_account.data.get('email')
+>>> serialized_account.data.get('username')
+>>> serialized_account.data
+````
+
+
 

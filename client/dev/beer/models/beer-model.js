@@ -1,4 +1,5 @@
-;(function(ng) {
+// Model: The data shown to the user in the view and with which the user interacts
+/*;(function(ng) {
   'use strict';
 
   ng.module('process-monitoring')

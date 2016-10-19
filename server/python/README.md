@@ -40,4 +40,15 @@ Now generate the migrations for the authentication app and apply them:
 ````bash
 python manage.py makemigrations
 python manage.py migrate
+```
+------------------------------------------------------------
+10 Create a superuser == admin
+Run:
+````bash
+python manage.py createsuperuser
 ````
+11 Open Django's shell:
+````
+python manage.py shell
+````
+

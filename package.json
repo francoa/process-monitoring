@@ -24,6 +24,7 @@
     "express": "~4.14.0",
     "express-content-length-validator": "1.0.0",
     "morgan": "^1.5.2",  
+    "multer": "^1.2.0",
     "newrelic": "^1.18.2",
     "helmet": "^2.1.1",
     "sqlite3": "^3.1.6"

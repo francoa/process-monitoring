@@ -1,0 +1,56 @@
+<div class="monitor">
+  <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+
+    <div class="container-fluid">
+
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" ng-controller="MonitorController">
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Opciones <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#" ng-click="startProcess()">Comenzar proceso</a></li>
+              <li class="divider"></li>
+              <li><a href="#">ETC</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Usuario</b> <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a data-toggle="modal" href="#monitor-modal">Cambiar contraseña</a></li>
+              <li class="divider"></li>
+              <li><a href="#" ng-click="logout()">Log Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+
+  </nav>
+  <div class="modal fade" id="monitor-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="monitormodal-container">
+      <h1>Cambie contraseña</h1><br>
+      <form>
+        <input type="password" ng-model="user.oldPass" placeholder="Antigua contraseña">
+        <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña">
+        <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña">
+        <button type="button" class="btn btn-primary btn-block" ng-click="cambiarContrasena(user)">Cambiar</button>
+      </form>
+          
+    </div>
+  </div>
+</div>
+</div>

@@ -5,19 +5,22 @@ if (process.env.NODE_ENV === 'production')
 
 const PORT = process.env.PORT || 3333;
 
-const os = require('os');
-const https = require('https');
-const express = require('express');
-const fs = require('fs');
-const RoutesConfig = require('./config/routes.conf');
-//const DBConfig = require('./config/db.conf');
-const Routes = require('./routes/index');
+const os = require('os'),
+      https = require('https'),
+      express = require('express'),
+      fs = require('fs'),
+      RoutesConfig = require('./config/routes.conf'),
+      //DBConfig = require('./config/db.conf'),
+      Routes = require('./routes/index'),
+      app = express();
 
-const app = express();
+
+/****** USE ******/
 
 RoutesConfig.init(app);
 //DBConfig.init();
 Routes.init(app, express.Router());
+
 
 /****** GRACEFULLY CLOSE (NO FUNCA) ******/
 
@@ -51,6 +54,11 @@ const opts = {
   key: fs.readFileSync(__dirname + '/cert/server.key'),
   cert: fs.readFileSync(__dirname + '/cert/server.crt')
 }
+
+app.post('/login',function(req,res){
+  console.log(req.body);
+  res.status(200).send({admin: false, username: req.body.username});
+})
 
 var server = https.createServer(opts, app)
      .listen(PORT, () => {

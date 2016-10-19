@@ -1,8 +1,8 @@
-;(function(ng) {
+/*;(function(ng) {
   'use strict';
 
   ng.module('process-monitoring')
-    .controller('BeerController', [
+    .controller('LoginController', [
       '$log',
       'Beer',
       'BeerDAO',

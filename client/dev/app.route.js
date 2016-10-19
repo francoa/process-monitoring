@@ -7,9 +7,9 @@
       function($routeProvider) {
         $routeProvider
           .when('/', {
-            templateUrl: 'beer/templates/login.html'/*,
+            templateUrl: 'beer/templates/login.html',
             controller: 'LoginController',
-            controllerAs: 'loginCtrl'*/
+            controllerAs: 'loginCtrl'
           })
           .otherwise({
             redirectTo: '/'

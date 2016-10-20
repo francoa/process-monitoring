@@ -10,11 +10,12 @@
       };
 
       $scope.logout=function(){
-        $log.log("UA");
+        //OBVIOUS TODO: AUTH
+        $window.location.href='https://localhost:3000/'
       };
 
       $scope.cambiarContrasena = function(user){
-        $log.log("UA");
+        $window.alert("Cambio de contraseña");
       }
 
     }]);

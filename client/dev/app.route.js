@@ -6,13 +6,18 @@
       '$routeProvider',
       function($routeProvider) {
         $routeProvider
-          .when('/', {
+          .when('/login', {
             templateUrl: 'beer/templates/login.html',
             controller: 'LoginController',
             controllerAs: 'loginCtrl'
           })
+          .when('/monitor',{
+            templateUrl: 'beer/templates/monitor.html',
+            controller: 'MonitorController',
+            controllerAs: 'monitorCtrl'
+          })
           .otherwise({
-            redirectTo: '/'
+            redirectTo: '/login'
           });
       }
     ]);

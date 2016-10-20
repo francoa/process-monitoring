@@ -27,20 +27,9 @@
       <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
       <div class="collapse navbar-collapse" id="#navbar-collapse-2">
         <ul class="nav navbar-nav side-nav">
-            <li class="active">
-                <a href="#"><i class="fa fa-fw fa-wrench"></i> Comenzar proceso </a>
-            </li>
-            <!--li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                <ul id="demo" class="collapse">
-                    <li>
-                        <a href="#">Dropdown Item</a>
-                    </li>
-                    <li>
-                        <a href="#">Dropdown Item</a>
-                    </li>
-                </ul>
-            </li-->
+          <li>
+            <a data-toggle="modal" href="#recipe-modal"><i class="fa fa-fw fa-wrench"></i> Seleccionar receta </a>
+          </li>
         </ul>
       </div><!-- /.navbar-collapse -->
 
@@ -48,17 +37,29 @@
 
   <!-- Modal container -->
   <div class="modal fade" id="monitor-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="slidemodal-container">
-      <h1>Cambie contraseña</h1><br>
-      <form>
-        <input type="password" ng-model="user.oldPass" placeholder="Antigua contraseña">
-        <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña">
-        <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña">
-        <button type="button" class="btn btn-primary btn-block" ng-click="cambiarContrasena(user)">Cambiar</button>
-      </form>
-          
+    <div class="modal-dialog">
+      <div class="slidemodal-container">
+        <h1>Cambie contraseña</h1><br>
+        <form>
+          <input type="password" ng-model="user.oldPass" placeholder="Antigua contraseña">
+          <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña">
+          <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña">
+          <button type="button" class="btn btn-primary btn-block" ng-click="cambiarContrasena(user)">Cambiar</button>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+
+  <!-- Modal container -->
+  <div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="slidemodal-container">
+        <h1>Seleccione receta para comenzar</h1><br>
+        <form>
+          <select ng-model="receta" ng-options="x for x in recetas"></select>
+          <button type="button" class="btn btn-primary btn-block" ng-click="startProcess(receta)"> Comenzar </button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

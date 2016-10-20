@@ -5,8 +5,11 @@
     .controller('MonitorController', ['$log','$scope','$window','$http', function($log,$scope,$window,$http) {
       var self = this;
 
-      $scope.startProcess=function(){
-        $log.log("UA");
+      //OBVIOUS TODO: GET RECIPES FROM SERVER
+      $scope.recetas = ["Receta 1", "Receta 2", "Receta 3"];
+
+      $scope.startProcess=function(receta){
+        $window.alert(receta);
       };
 
       $scope.logout=function(){

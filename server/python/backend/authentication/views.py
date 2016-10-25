@@ -5,7 +5,7 @@ from authentication.models import Account
 from authentication.serializers import AccountSerializer
 from authentication.permissions import IsAccountOwner
 import json
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 # View of the API endpoint that will create and Account object
@@ -73,3 +73,13 @@ class LoginView(views.APIView):
                 'status': 'Unauthorized',
                 'manage': 'Username/password combination invalid'
             }, status=status.HTTP_401_UNAUTHORIZED)
+
+
+# Only authenticated users can hit this endpoint
+class LogoutView(views.APIView):
+    permissions_classes = (permissions.IsAuthenticated,)
+
+    # Just logout with with logout Django method
+    def post(self, request, format=None):
+        logout(request)
+        return Response({}, status=status.HTTP_204_NO_CONTENT)

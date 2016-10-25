@@ -13,9 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+from backend.views import IndexView
+from rest_framework_nested import routers
+from authentication.views import AccountViewSet
+
+router = routers.SimpleRouter()
+router.register(r'accounts', AccountViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    # The url that contains api/v1 are routed to viewset
+    url(r'^api/v1/', include(router.urls)),
+    # Passthrough: All not matching go to index
+    url('^.*$', IndexView.as_view(), name='index'),
 ]

@@ -6,3 +6,4 @@ bower_components
 typings
 
 __pycache__
+.DS_Store

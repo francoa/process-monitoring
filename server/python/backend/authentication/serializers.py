@@ -13,13 +13,14 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         # Specifies the model so only attributes of this model can be serialized
         model = Account
-        # Here we specifies which attributes of the Account model can be serialized
+        # Here we specifies which attributes of the Account model should be serialized
         fields = ('id', 'email', 'username', 'created_at', 'updated_at',
                   'first_name', 'last_name', 'tagline', 'password',
                   'confirm_password',)
         read_only_fields = ('created_at', 'updated_at')
 
         # Deserialization: process to convert JSON to Python Object
+        # is handled by create and update methods
         # When creating a new object
         def create(self, validated_data):
             return Account.objects.create(**validated_data)

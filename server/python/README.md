@@ -17,13 +17,14 @@ django-admin startproject backend
 4 Verify it works
 ````bash
 cd backend
-python manage.py ruserver
+python manage.py runserver
 ````
 5 Make a new app called authentication
 ````bash
 python manage.py startapp authentiction
 ````
-6 Add to authentication/models.py the Account model and its manager
+6 Add to authentication/models.py the Account model and its manager.
+When you want to get a model instance in Django, you use an expression of the form Model.objects.get(**kwargs). The objects attribute here is a Manager class whose name typically follows the modelnameManager convention.
 7 Update backend/settings.py to set Account as our authentication model. Add at the end of file
 ````python
 AUTH_USER_MODEL = 'authentication.Account'
@@ -89,6 +90,12 @@ Run:
 >>> serialized_account.data.get('username')
 >>> serialized_account.data
 ````
-
-
+----
+14 Account API viewset. To register a user, we need an API endpoint that will create an Account object, an AngularJS service to make an AJAX request to the API and a registration form.
+Edit authentication/views.py and authentication/permissions.py
+15 Adding an API endpoint.
+Add the view and routers(from rest_framework) to URLs file. Update backend/urls.py
+----
+(Creo que esto es mas frontend)
+16 Angular service for registering new users
 

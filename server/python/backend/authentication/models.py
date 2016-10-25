@@ -22,7 +22,7 @@ class AccountManager(BaseUserManager):
 
         return account
 
-    # Create an admin (user with )
+    # Create an admin (user with privileges)
     def create_superuser(self, email, password, **kwargs):
         account = self.create_user(email, password, **kwargs)
 
@@ -33,7 +33,7 @@ class AccountManager(BaseUserManager):
         return account
 
 
-# Account Model
+# Account Model: inherits from AbstractBaseUser
 class Account(AbstractBaseUser):
     # We use the email in the USERNAME_FIELD to login
     email = models.EmailField(unique=True)
@@ -54,10 +54,13 @@ class Account(AbstractBaseUser):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Manager of the Account Model (this model, right here)
+    # This attribute will allow to have access to the rest of attr
+    # By these expression: Model.objects.get(**kwargs)
     objects = AccountManager()
 
     # We use email to login
     USERNAME_FIELD = 'email'
+    # Username field is compulsory
     REQUIRED_FIELDS = ['username']
 
     # Overwrite so string representation has email on it

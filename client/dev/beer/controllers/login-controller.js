@@ -15,7 +15,7 @@
         $http.post(path,user)
             .success(function (data){
               //OBVIOUS TODO: AUTH
-              $window.location.href='https://localhost:3000/monitor'
+              $window.location.href='https://localhost:3000/admin'
         });
       };
 

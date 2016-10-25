@@ -49,7 +49,10 @@
     </script>
 
     
+    {% load compress %}
+    {% load staticfiles %}
 
+    {% compress js %}
     <script type="text/javascript" src="./bower_components/jquery/dist/jquery.js?rev=@@hash"></script>
     <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js?rev=@@hash"></script>
     <script type="text/javascript" src="./bower_components/angular/angular.js?rev=@@hash"></script>
@@ -65,5 +68,6 @@
     <script type="text/javascript" src="./beer/controllers/login-controller.js?rev=@@hash"></script>
     <script type="text/javascript" src="./beer/controllers/monitor-controller.js?rev=@@hash"></script>
     <script type="text/javascript" src="./beer/controllers/admin-controller.js?rev=@@hash"></script>
+    {% endcompress js %}
   </body>
 </html>

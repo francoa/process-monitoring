@@ -16,6 +16,11 @@
             controller: 'MonitorController',
             controllerAs: 'monitorCtrl'
           })
+          .when('/admin',{
+            templateUrl: 'beer/templates/admin.html',
+            controller: 'AdminController',
+            controllerAs: 'adminCtrl'
+          })
           .otherwise({
             redirectTo: '/login'
           });

@@ -19,7 +19,7 @@
 
     {% compress css %}
     <link type="text/css" rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'bower_components/fontawesome/css/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="{% static 'bower_components/fontawesome/css/font-awesome.min.css' %}" />
 
     <link type="text/css" rel="stylesheet" href="{% static 'beer/styles/frameworks_overrides.css' %}" />
     <link type="text/css" rel="stylesheet" href="{% static 'beer/styles/fonts.css' %}" />
@@ -53,9 +53,6 @@
       ga('send', 'pageview');
     </script>
 
-    
-    {% load compress %}
-    {% load staticfiles %}
 
     {% compress js %}
     <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>

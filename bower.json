@@ -3,7 +3,9 @@
   "main": "process-monitoring.js",
   "version": "0.0.1",
   "homepage": "https://github.com//process-monitoring",
-  "authors": ["francoa <email>"],
+  "authors": [
+    "francoa <email>"
+  ],
   "description": "desc",
   "keywords": [],
   "license": "MIT",

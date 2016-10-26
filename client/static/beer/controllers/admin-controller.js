@@ -5,10 +5,13 @@
     .controller('AdminController', ['$log','$scope','$window','$http', function($log,$scope,$window,$http) {
       var self = this;
 
+      $scope.sortType     = 'date'; // set the default sort type
+      $scope.sortReverse  = true;  // set the default sort order
+
       //OBVIOUS TODO: GET RECIPES FROM SERVER
       $scope.listaRecetas = ["Receta 1", "Receta 2", "Receta 3"];
       $scope.receta = {"nombre":"","fases":[]};
-      $scope.logs = [{"date":"2016:05:15", "name":"Cook1"}]
+      $scope.logs = [{"date":"2016 05 15", "name":"Cook1"},{"date":"2016 06 15", "name":"Cook2"},{"date":"2016 05 03", "name":"Cook3"},{"date":"2016 05 30", "name":"Cook4"}]
 
       $scope.logout=function(){
         //OBVIOUS TODO: AUTH
@@ -65,9 +68,14 @@
         
       };     
 
+      $scope.downloadLog=function(logNombre){
+        $window.alert(logNombre);
+      };
+
       $scope.popupModal=function(name){
         $("#"+name).modal();
-      } 
+      };
+
      
     }]);
 }(window.angular));

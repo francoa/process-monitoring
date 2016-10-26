@@ -44,7 +44,7 @@
           <input type="password" ng-model="user.oldPass" placeholder="Antigua contraseña">
           <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña">
           <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña">
-          <button type="button" class="btn btn-primary btn-block" ng-click="cambiarContrasena(user)">Cambiar</button>
+          <button type="button" class="btn btn-primary btn-block" ng-click="cambiarContrasena(user)" data-dismiss="modal">Cambiar</button>
         </form>
       </div>
     </div>
@@ -57,7 +57,7 @@
         <h1>Seleccione receta para comenzar</h1><br>
         <form>
           <select ng-model="receta" ng-options="x for x in recetas"></select>
-          <button type="button" class="btn btn-primary btn-block" ng-click="startProcess(receta)"> Comenzar </button>
+          <button type="button" class="btn btn-primary btn-block" ng-click="startProcess(receta)" data-dismiss="modal"> Comenzar </button>
         </form>
       </div>
     </div>

@@ -14,7 +14,7 @@
   font-size: 1.8em;
 }
 
-.slidemodal-container input[type=text], input[type=password] {
+.slidemodal-container input[type=text], input[type=password], input[type=number] {
   height: 44px;
   font-size: 16px;
   width: 100%;
@@ -29,7 +29,7 @@
   -moz-box-sizing: border-box;
 }
 
-.slidemodal-container input[type=text]:hover, input[type=password]:hover {
+.slidemodal-container input[type=text]:hover, input[type=password]:hover, input[type=number]:hover {
   border: 1px solid #b9b9b9;
   border-top: 1px solid #a0a0a0;
   -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
@@ -77,6 +77,30 @@
     padding: 0 15px;
 }
 
+.side-nav>li>ul {
+    padding: 0;
+}
+
+.side-nav>li>ul>li>a {
+    display: block;
+    padding: 10px 15px 10px 38px;
+    text-decoration: none;
+    color: #999;
+}
+
+.side-nav>li>ul>li>a:hover {
+    color: #fff;
+}
+
+.wrapper {
+    padding-left: 0;
+}
+
+.page-wrapper {
+    width: 100%;
+    padding: 0;
+}
+
 @media(min-width:768px) {
     .side-nav {
         position: fixed;
@@ -102,19 +126,13 @@
         outline: none;
         background-color: #000 !important;
     }
-}
 
-.side-nav>li>ul {
-    padding: 0;
-}
+    .wrapper {
+        padding-left: 225px;
+    }
 
-.side-nav>li>ul>li>a {
-    display: block;
-    padding: 10px 15px 10px 38px;
-    text-decoration: none;
-    color: #999;
-}
-
-.side-nav>li>ul>li>a:hover {
-    color: #fff;
+    .page-wrapper {
+        padding: 10px;
+        padding-top: 41px;
+    }
 }

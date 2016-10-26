@@ -1,4 +1,4 @@
-<div class="login" ng-controller="LoginController">
+<div class="homePage" ng-controller="LoginController">
   <nav class="navbar navbar-default navbar-inverse" role="navigation">
     <div class="container-fluid">
 
@@ -36,10 +36,10 @@
   <div class="modal-dialog">
     <div class="slidemodal-container">
       <h1>Ingrese usuario y contraseña</h1><br>
-      <form>
+      <form name="loginForm">
         <input type="text" ng-model="user.username" placeholder="Usuario">
         <input type="password" ng-model="user.password" placeholder="Contraseña">
-        <button type="button" class="btn btn-primary btn-block" ng-click="login(user)" data-dismiss="modal"> Sign in </button>
+        <button type="button" class="btn btn-primary btn-block" ng-click="login(user)" data-dismiss="modal" ng-disabled="loginForm.$invalid"> Sign in </button>
       </form>
     </div>
   </div>

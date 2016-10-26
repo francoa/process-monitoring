@@ -1,4 +1,4 @@
-<div class="admin wrapper" ng-controller="AdminController">
+<div class="nonHomePage wrapper" ng-controller="AdminController">
   <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
 
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -17,7 +17,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i><b> Usuario </b><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a data-toggle="modal" href="#monitor-modal"><i class="fa fa-fw fa-gear"></i> Cambiar contraseña </a></li>
+            <li><a href="#" ng-click="popupModal('monitor-modal')"><i class="fa fa-fw fa-gear"></i> Cambiar contraseña </a></li>
             <li class="divider"></li>
             <li><a href="#" ng-click="logout()"><i class="fa fa-fw fa-sign-out"></i> Log Out </a></li>
           </ul>
@@ -28,9 +28,9 @@
       <div class="collapse navbar-collapse" id="#navbar-collapse-2">
         <ul class="nav navbar-nav side-nav">
           <li>
-            <a data-toggle="modal" href="#fases-modal"><i class="fa fa-fw fa-plus"></i> Crear receta </a>
-            <a data-toggle="modal" href="#recipe-modal"><i class="fa fa-fw fa-wrench"></i> Trabajar en recetas </a>
-            <a href="#" ng-click="listRecipes()"><i class="fa fa-fw fa-list"></i> Lista de cocinadas </a>
+            <a href="#" ng-click="popupModal('fases-modal')"><i class="fa fa-fw fa-plus"></i> Crear receta </a>
+            <a href="#" ng-click="popupModal('recipe-modal')"><i class="fa fa-fw fa-wrench"></i> Trabajar en recetas </a>
+            <a href="#" ng-click="listCooking()"><i class="fa fa-fw fa-list"></i> Lista de cocinadas </a>
             <a href="#" ng-click="supervision()"><i class="fa fa-fw fa-eye"></i> Supervisión proceso </a>
           </li>
         </ul>
@@ -44,7 +44,7 @@
       <div class="row">
         <div class="col-lg-12">
 
-          <div id="recipe_form" style="display: none;">
+          <div id="recipeForm" style="display: none;">
             <h1 class="page-header">Receta {{receta.nombre}}</h1><br>
             <form name="userForm" ng-submit="saveRecipe()" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
 
@@ -84,6 +84,27 @@
             </form>
           </div>
         </div>
+        <div class="col-lg-12">
+            <div class="table-responsive" id="listOfCooks" style="display: none;">
+              <h1 class="page-header">Bordered Table</h1>
+              <table datatable="" class="table table-bordered table-hover list">
+                  <thead>
+                      <tr>
+                          <th>Fecha</th>
+                          <th>Nombre</th>
+                          <th>Descarga</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr ng-repeat="x in logs">
+                          <td>{{ x.date }}</td>
+                          <td>{{ x.name }}</td>
+                          <td><i class="fa fa-fw fa-download"></i></td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+        </div>
       </div>
     </div>
   </div>
@@ -93,11 +114,11 @@
     <div class="modal-dialog">
       <div class="slidemodal-container">
         <h1>Cambie contraseña</h1><br>
-        <form>
+        <form name="changePassForm">
           <input type="password" ng-model="user.oldPass" placeholder="Antigua contraseña">
           <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña">
           <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña">
-          <button type="button" class="btn btn-primary btn-block" ng-click="cambiarContrasena(user)" data-dismiss="modal">Cambiar</button>
+          <button type="button" class="btn btn-primary btn-block" ng-click="cambiarContrasena(user)" data-dismiss="modal" ng-disabled="changePassForm.$invalid">Cambiar</button>
         </form>
       </div>
     </div>
@@ -109,9 +130,11 @@
       <div class="slidemodal-container">
         <h1>Seleccione receta</h1><br>
         <form>
-          <select ng-model="recetaNombre" ng-options="x for x in listaRecetas"></select>
+          <select ng-model="recetaNombre" ng-options="x for x in listaRecetas" required>
+            <option value="">Seleccione Receta</option> 
+          </select>
           <button type="button" class="btn btn-primary btn-block" ng-click="startEditRecipe(recetaNombre)" data-dismiss="modal"> Modificar </button>
-          <button type="button" class="btn btn-danger btn-block" ng-click="deleteRecipe(recetaNombre)" data-dismiss="modal"> Borrar </button>
+          <button type="button" class="btn btn-danger btn-block" ng-click="deleteRecipe(recetaNombre)" data-dismiss="modal" href="#"> Borrar </button>
         </form>
       </div>
     </div>

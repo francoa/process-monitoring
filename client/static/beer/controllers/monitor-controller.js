@@ -21,5 +21,9 @@
         $window.alert("Cambio de contraseña");
       }
 
+      $scope.popupModal=function(name){
+        $("#"+name).modal();
+      } 
+
     }]);
 }(window.angular));

@@ -8,6 +8,7 @@
       //OBVIOUS TODO: GET RECIPES FROM SERVER
       $scope.listaRecetas = ["Receta 1", "Receta 2", "Receta 3"];
       $scope.receta = {"nombre":"","fases":[]};
+      $scope.logs = [{"date":"2016:05:15", "name":"Cook1"}]
 
       $scope.logout=function(){
         //OBVIOUS TODO: AUTH
@@ -25,7 +26,9 @@
           temp.id=i;
           $scope.receta.fases[i]=temp;
         };
-        $('#recipe_form').show();
+        $('#recipeForm').show();
+        $('#listOfCooks').hide();
+        
       };
 
       $scope.startEditRecipe=function(recetaNombre){
@@ -39,7 +42,8 @@
         else{
           $scope.receta = {"nombre":"STOUT", "fases":[{"temp":50, "tdiff": 5, "time":60},{"temp":60, "tdiff": 5,"time":20},{"temp":70, "tdiff": 5, "time":10},{"temp":70, "tdiff": 5, "time":10},{"temp":70, "tdiff": 5, "time":10},{"temp":70, "tdiff": 5, "time":10},{"temp":70, "tdiff": 5, "time":10}]};
         }
-        $('#recipe_form').show();
+        $('#recipeForm').show();
+        $('#listOfCooks').hide();
       };
 
       $scope.saveRecipe=function(){
@@ -52,13 +56,18 @@
         $window.alert(recetaNombre);
       };
 
-      $scope.listRecipes=function(){
-        
+      $scope.listCooking=function(){
+        $('#listOfCooks').show();
+        $('#recipeForm').hide();
       };
 
       $scope.supervision=function(){
         
-      };      
+      };     
+
+      $scope.popupModal=function(name){
+        $("#"+name).modal();
+      } 
      
     }]);
 }(window.angular));

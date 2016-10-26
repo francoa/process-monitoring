@@ -21,15 +21,8 @@
     <link type="text/css" rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" />
     <link type="text/css" rel="stylesheet" href="{% static 'bower_components/fontawesome/css/font-awesome.min.css' %}" />
 
-    <link type="text/css" rel="stylesheet" href="{% static 'beer/styles/frameworks_overrides.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'beer/styles/fonts.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'beer/styles/position.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'bower_components/angular-datatables/dist/css/angular-datatables.min.css' %}" />
     <link type="text/css" rel="stylesheet" href="{% static 'beer/styles/styles.css' %}"/>
-    <link type="text/css" rel="stylesheet" href="{% static 'beer/styles/styles_login.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'beer/styles/styles_monitor.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'beer/styles/styles_admin.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'beer/styles/media_queries.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'beer/styles/events.css' %}" />
     {% endcompress %}
   </head>
 
@@ -55,12 +48,14 @@
 
 
     {% compress js %}
-    <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bower_components/angular/angular.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bower_components/angular-messages/angular-messages.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bower_components/angular-route/angular-route.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bower_components/angular-resource/angular-resource.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/angular/angular.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/angular-datatables/dist/angular-datatables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/angular-messages/angular-messages.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/angular-route/angular-route.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bower_components/angular-resource/angular-resource.min.js' %}"></script>
 
     <script type="text/javascript" src="{% static 'app.js' %}"></script>
     <script type="text/javascript" src="{% static 'app.config.js' %}"></script>

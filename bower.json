@@ -3,7 +3,9 @@
   "main": "process-monitoring.js",
   "version": "0.0.1",
   "homepage": "https://github.com//process-monitoring",
-  "authors": ["francoa <email>"],
+  "authors": [
+    "francoa <email>"
+  ],
   "description": "desc",
   "keywords": [],
   "license": "MIT",
@@ -27,7 +29,10 @@
     "angular-route": "~1.5.x",
     "angular-resource": "~1.5.x",
     "bootstrap": "3.3.1",
-    "fontawesome": "~4.3.0"
+    "fontawesome": "~4.3.0",
+    "list.js": "*",
+    "datatables.net": "^1.10.12",
+    "angular-datatables": "^0.5.5"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.x"

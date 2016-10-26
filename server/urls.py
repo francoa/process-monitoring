@@ -18,8 +18,6 @@ from django.contrib import admin
 from views import IndexView
 from rest_framework_nested import routers
 from authentication.views import AccountViewSet, LoginView, LogoutView
-from django.conf import settings
-from django.conf.urls.static import static
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
@@ -32,4 +30,4 @@ urlpatterns = [
     url(r'^api/v1/auth/logout/$', LogoutView.as_view(), name='logout'),
     # Passthrough: All not matching go to index
     url('^.*$', IndexView.as_view(), name='index'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

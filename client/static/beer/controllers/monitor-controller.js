@@ -14,7 +14,7 @@
 
       $scope.logout=function(){
         //OBVIOUS TODO: AUTH
-        $window.location.href='https://localhost:3000/'
+        $window.location.href='https://localhost:8000/'
       };
 
       $scope.cambiarContrasena = function(user){

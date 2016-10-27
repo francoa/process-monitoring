@@ -127,6 +127,13 @@ body{
     padding: 0;
 }
 
+.flRight{
+  float: right;
+  position: relative;
+  top: -4px;
+  line-height: 1;
+}
+
 @media(min-width:768px) {
     .side-nav {
         position: fixed;

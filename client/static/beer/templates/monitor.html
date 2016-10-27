@@ -1,4 +1,4 @@
-<div class="nonHomePage" ng-controller="MonitorController">
+<div class="nonHomePage wrapper" ng-controller="MonitorController">
   <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
 
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -34,6 +34,35 @@
       </div><!-- /.navbar-collapse -->
 
   </nav>
+
+
+  <div class="page-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Tasks Panel</h3>
+            </div>
+            <div class="panel-body">
+              <div class="list-group">
+                <div ng-repeat="x in instrucciones">
+                  <a class="list-group-item" ng-if="paso > $index">
+                    <i class="fa fa-fw fa-check-circle" ></i> {{ x.msg }}
+                    <button type="button" class="btn btn-primary badge" ng-click="pasoSiguiente()" ng-if="paso == $index">Continuar</button>
+                  </a>
+                  <a class="list-group-item" ng-if="paso <= $index">
+                    <i class="fa fa-fw fa-wrench" ng-if="paso <= $index"></i> {{ x.msg }}
+                    <button type="button" class="btn btn-primary badge" ng-click="pasoSiguiente()" ng-if="paso == $index">Continuar</button>
+                  </a>
+                </div>                    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal container -->
   <div class="modal fade" id="monitor-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">

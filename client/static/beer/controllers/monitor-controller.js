@@ -25,6 +25,10 @@
         {"msg":"Colocar bombas para knock-out","autom":false},
         {"msg":"Colocar bombas para lavado","autom":false},
         {"msg":"Lavado de grano","autom":false}];
+      
+      $scope.detalle = [
+        {"msg": "Encender el mechero hasta el herbor", "img": null},
+        {"msg": "Se debe abir esta valvula primero", "img": "/static/common/images/valvula1.jpg"}];
 
       $scope.startProcess=function(receta){
         $window.alert(receta);

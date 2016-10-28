@@ -1,4 +1,4 @@
-<div class="nonHomePage" ng-controller="MonitorController">
+<div class="nonHomePage wrapper" ng-controller="MonitorController">
   <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
 
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -34,6 +34,49 @@
       </div><!-- /.navbar-collapse -->
 
   </nav>
+
+
+  <div class="page-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Tasks Panel</h3>
+            </div>
+            <div class="panel-body">
+              <div class="list-group">
+                <div ng-repeat="x in instrucciones">
+                  <a class="list-group-item" ng-if="x.autom == false">
+                    <i class="fa fa-fw fa-check-circle" ng-if="paso > $index"></i>
+                    <i class="fa fa-fw fa-wrench" ng-if="paso <= $index"></i> {{ x.msg }}
+                    <button type="button" class="btn btn-primary flRight" ng-click="pasoSiguiente()" ng-if="paso == $index">Finalizado</button>
+                  </a>
+                  <a class="list-group-item" ng-if="x.autom == true">
+                    <i class="fa fa-fw fa-check-circle" ng-if="paso > $index"></i>
+                    <i class="fa fa-fw fa-wrench" ng-if="paso <= $index"></i> {{ x.msg }}
+                    <button ng-attr-id="{{'button' + $index}}" type="button" class="btn btn-primary flRight" ng-click="inicioTimer()" ng-if="paso == $index">Comenzar</button>
+                    <i ng-attr-id="{{'spin' + $index}}" class="fa fa-spinner fa-spin flRight" style="font-size:24px; display: none; float: right;"></i>
+                  </a>
+                </div>                    
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-edit fa-fw"></i> Details </h3>
+            </div>
+            <div class="panel-body">
+              <p>{{detalle[paso].msg}}</p>
+              <img class="img-detalle" ng-src="{{detalle[paso].img}}" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal container -->
   <div class="modal fade" id="monitor-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">

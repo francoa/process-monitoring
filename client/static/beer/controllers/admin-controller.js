@@ -5,6 +5,8 @@
     .controller('AdminController', ['$log','$scope','$window','$http', function($log,$scope,$window,$http) {
       var self = this;
 
+      $scope.alerta={"msg":"ESTE ES EL MSG Q VIENE DEL SERVER"}
+
       $scope.sortType     = 'date'; // set the default sort type
       $scope.sortReverse  = true;  // set the default sort order
 
@@ -75,7 +77,6 @@
       $scope.popupModal=function(name){
         $("#"+name).modal();
       };
-
      
     }]);
 }(window.angular));

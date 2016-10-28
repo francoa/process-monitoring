@@ -47,13 +47,16 @@
             <div class="panel-body">
               <div class="list-group">
                 <div ng-repeat="x in instrucciones">
-                  <a class="list-group-item" ng-if="paso > $index">
-                    <i class="fa fa-fw fa-check-circle" ></i> {{ x.msg }}
-                    <button type="button" class="btn btn-primary badge" ng-click="pasoSiguiente()" ng-if="paso == $index">Continuar</button>
-                  </a>
-                  <a class="list-group-item" ng-if="paso <= $index">
+                  <a class="list-group-item" ng-if="x.autom == false">
+                    <i class="fa fa-fw fa-check-circle" ng-if="paso > $index"></i>
                     <i class="fa fa-fw fa-wrench" ng-if="paso <= $index"></i> {{ x.msg }}
-                    <button type="button" class="btn btn-primary badge" ng-click="pasoSiguiente()" ng-if="paso == $index">Continuar</button>
+                    <button type="button" class="btn btn-primary flRight" ng-click="pasoSiguiente()" ng-if="paso == $index">Finalizado</button>
+                  </a>
+                  <a class="list-group-item" ng-if="x.autom == true">
+                    <i class="fa fa-fw fa-check-circle" ng-if="paso > $index"></i>
+                    <i class="fa fa-fw fa-wrench" ng-if="paso <= $index"></i> {{ x.msg }}
+                    <button ng-attr-id="{{'button' + $index}}" type="button" class="btn btn-primary flRight" ng-click="inicioTimer()" ng-if="paso == $index">Comenzar</button>
+                    <i ng-attr-id="{{'spin' + $index}}" class="fa fa-spinner fa-spin flRight" style="font-size:24px; display: none; float: right;"></i>
                   </a>
                 </div>                    
               </div>

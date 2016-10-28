@@ -130,6 +130,13 @@ body{
 .img-detalle {
   width:11em;
   height:11em;
+ }
+ 
+.flRight{
+  float: right;
+  position: relative;
+  top: -4px;
+  line-height: 1;
 }
 
 @media(min-width:768px) {

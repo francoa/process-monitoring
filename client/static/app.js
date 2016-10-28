@@ -4,6 +4,8 @@
   ng.module('process-monitoring', [
       'ngResource',
       'ngRoute',
-      'ngMessages'
-    ]);
+      'ngMessages',
+      'ngSanitize',
+      'ng-showdown'
+    ])
 }(window.angular));

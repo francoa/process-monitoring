@@ -69,8 +69,10 @@
               <h3 class="panel-title"><i class="fa fa-edit fa-fw"></i> Details </h3>
             </div>
             <div class="panel-body">
-              <p>{{detalle[paso].msg}}</p>
-              <img class="img-detalle" ng-src="{{detalle[paso].img}}" />
+              <div markdown-to-html="instrucciones[paso].detail"></div>
+              <div ng-show="instrucciones[paso].img != null">
+                <img class="img-detalle" ng-src="{{instrucciones[paso].img}}" />
+              </div>
             </div>
           </div>
         </div>

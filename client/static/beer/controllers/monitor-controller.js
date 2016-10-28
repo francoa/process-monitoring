@@ -10,8 +10,8 @@
       $scope.recetas = ["Receta 1", "Receta 2", "Receta 3"];
       $scope.paso = 0;
       $scope.instrucciones = [
-        {"msg":"Calentar agua","autom":false},
-        {"msg":"Colocar bombas para trasvase de agua","autom":true},
+        {"msg":"Calentar agua","autom":false, "detail": "| h1 | h2| h3 |\n|---|---|---|\n| 100  | [a][1]  | ![b][2] |", "img": null},
+        {"msg":"Colocar bombas para trasvase de agua","autom":true, "detail": "#Encender el mechero\n*hasta el herbor*\n\n* Item1\n* Item 2\n\n\n", "img": "/static/common/images/valvula1.jpg"},
         {"msg":"Alcanzar TºC de olla licor","autom":false},
         {"msg":"Alcanzar TºC para macerar","autom":false},
         {"msg":"Mash-in","autom":false},

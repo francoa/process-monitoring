@@ -2,8 +2,10 @@
   'use strict';
 
   ng.module('process-monitoring')
-    .controller('MonitorController', ['$log','$scope','$window','$http', '$interval', function($log,$scope,$window,$http,$interval) {
+    .controller('MonitorController', ['$scope','$window','$http', '$interval','UsersDAO', function($scope,$window,$http,$interval,UsersDAO) {
       var self = this;
+      $scope.UsersDAO = UsersDAO;
+
       var timer;
 
       //OBVIOUS TODO: GET RECIPES FROM SERVER
@@ -76,8 +78,14 @@
         timer = $interval(verifyInstruction,1000);
       };
 
+      /*******************/
+      /**     MODALS    **/
+      /*******************/
       $scope.popupModal=function(name){
         $("#"+name).modal();
       };
+      /*******************/
+      /**     MODALS    **/
+      /*******************/
     }]);
 }(window.angular));

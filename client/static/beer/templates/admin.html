@@ -17,9 +17,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i><b> Usuario </b><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#" ng-click="popupModal('monitor-modal')"><i class="fa fa-fw fa-gear"></i> Cambiar contraseña </a></li>
+            <li><a href="#" ng-click="popupModal('input-modal')"><i class="fa fa-fw fa-gear"></i> Cambiar contraseña </a></li>
             <li class="divider"></li>
-            <li><a href="#" ng-click="logout()"><i class="fa fa-fw fa-sign-out"></i> Log Out </a></li>
+            <li><a href="#" ng-click="UsersDAO.logout()"><i class="fa fa-fw fa-sign-out"></i> Log Out </a></li>
           </ul>
         </li>
       </ul>
@@ -28,10 +28,10 @@
       <div class="collapse navbar-collapse" id="#navbar-collapse-2">
         <ul class="nav navbar-nav side-nav">
           <li>
-            <a href="#" ng-click="popupModal('fases-modal')"><i class="fa fa-fw fa-plus"></i> Crear receta </a>
+            <a href="#" ng-click="popupModal('rcpName-modal')"><i class="fa fa-fw fa-plus"></i> Crear receta </a>
             <a href="#" ng-click="popupModal('recipe-modal')"><i class="fa fa-fw fa-wrench"></i> Trabajar en recetas </a>
             <a href="#" ng-click="listCooking()"><i class="fa fa-fw fa-list"></i> Lista de cocinadas </a>
-            <a href="#" ng-click="supervision()"><i class="fa fa-fw fa-eye"></i> Supervisión proceso </a>
+            <!--a href="#" ng-click="supervision()"><i class="fa fa-fw fa-eye"></i> Supervisión proceso </a-->
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -43,48 +43,89 @@
     <div class="container-fluid">
       <!-- Page Heading -->
       <div class="row">
-        <div class="col-lg-12">
-
+        <div class="col-lg-6">
           <div id="recipeForm" style="display: none;">
-            <h1 class="page-header">Receta {{receta.nombre}}</h1><br>
-            <form name="userForm" ng-submit="saveRecipe()" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
-
+            <h1 class="page-header">Receta {{receta.Nombre}}</h1><br>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                  <font size="5"> Pasos </font>
+                  <a class="btn btn-danger" href="#" style="float:right;" ng-click="hideRecipe()">
+                    <span class="fa fa-fw fa-trash img-circle"></span>
+                    Descartar
+                  </a> 
+                  <a class="btn btn-primary" href="#" style="float:right;" ng-click="saveRecipe()">
+                    <span class="fa fa-fw fa-save img-circle"></span>
+                    Guardar
+                  </a> 
+                  <a class="btn btn-success" href="#" style="float:right;" ng-click="addStep()">
+                    <span class="fa fa-fw fa-plus img-circle"></span>
+                    Agregar
+                  </a> 
+              </div>
+              <div class="panel-body">
+                <div class="list-group">
+                  <div ng-repeat="x in receta.Instrucciones">
+                    <li class="list-group-item" >
+                      <a href="#" ng-click="moveDownStep($index)" class="glyphicon btn-glyphicon2 glyphicon-arrow-down img-circle"></a>
+                      <a href="#" ng-click="moveUpStep($index)" class="glyphicon btn-glyphicon2 glyphicon-arrow-up img-circle"></a>
+                      {{ x.msg }} 
+                      <a href="#" ng-click="deleteStep($index)" class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger flRight"></a>
+                      <a href="#" ng-click="editStep($index)" class="glyphicon btn-glyphicon glyphicon-pencil img-circle flRight"></a>
+                    </li>
+                  </div>                    
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1"/>
+        <div class="col-lg-5">
+          <div id="pasoForm" style="display: none;">
+            <h1 class="page-header"> Paso </h1><br>
+            <form name="userForm"> 
+              <!-- msg -->
               <div class="row form-group">
-                <ng-form name="nameFieldForm">
-                  <label>Nombre</label>
-                  <input type="text" name="name" class="form-control" ng-model="receta.nombre" ng-model-options="{ updateOn: 'blur' }" required>
-                  <p ng-show="nameFieldForm.name.$invalid && !nameFieldForm.name.$pristine" class="text-danger"><i class="fa fa-fw fa-warning"></i>Campo requerido</p>
-                </ng-form>
+                <label> Descripción </label>
+                <input type="text" class="form-control" ng-model="paso.msg" required>
+              </div><br>
+              <!-- autom -->
+              <div class="row form-group">
+                <label> Control : </label>
+                Automático <input type="radio" ng-model="paso.autom" ng-value="true" >
+                Manual <input type="radio" ng-model="paso.autom" ng-value="false">
+              </div><br>
+              <!-- detalle -->
+              <div class="row form-group">
+                <label>Detalles</label>
+                <textarea ng-model="paso.Detalle" class="form-control"/>
+              </div><br>
+              <!-- fases ??? -->
+              <div class="row form-group" ng-if="paso.autom == true">
+                <label>Ingrese Número de fases</label>
+                <input type="number" ng-model="paso.numFases" class="form-control" required>
+                <div class="row form-group" ng-repeat="i in getNumber(paso.numFases) track by $index">
+                  <div class="col-lg-4">
+                    <label>Temperatura (ºC)</label>
+                    <input type="number" class="form-control" ng-model="paso.fases[$index].temp" required>
+                  </div>
+                  <div class="col-lg-4">
+                    <label>Tiempo (minutos)</label>
+                    <input type="number" class="form-control" ng-model="paso.fases[$index].time" required>
+                  </div>
+                  <div class="col-lg-4">
+                    <label>Diferencial T (ºC)</label>
+                    <input type="number" class="form-control" ng-model="paso.fases[$index].tdiff" required>
+                  </div>
+                </div><br>
               </div>
 
-              <h1>Fases</h1>
-              <div class="row form-group" ng-repeat="recetaFase in receta.fases track by $index">
-                <ng-form name="faseFieldForm">
-                  <div class="col-lg-5">
-                    <label>Temperatura (ºC)</label>
-                    <input type="number" name="temp1" class="form-control" ng-model="recetaFase.temp" ng-model-options="{ updateOn: 'blur' }" required>
-                    <p ng-show="faseFieldForm.temp1.$invalid && !faseFieldForm.temp1.$pristine" class="text-danger"><i class="fa fa-fw fa-warning"></i>Campo requerido</p>
-                  </div>
-                  <div class="col-lg-5">
-                    <label>Tiempo (minutos)</label>
-                    <input type="number" name="time1" class="form-control" ng-model="recetaFase.time" ng-model-options="{ updateOn: 'blur' }" required>
-                    <p ng-show="faseFieldForm.time1.$invalid && !faseFieldForm.time1.$pristine" class="text-danger">C<i class="fa fa-fw fa-warning"></i>ampo requerido</p>
-                  </div>
-                  <div class="col-lg-2">
-                    <label>Diferencial T (ºC)</label>
-                    <input type="number" name="tdif1" class="form-control" ng-model="recetaFase.tdiff" ng-model-options="{ updateOn: 'blur' }" required>
-                    <p ng-show="faseFieldForm.tdif1.$invalid && !faseFieldForm.tdif1.$pristine" class="text-danger"><i class="fa fa-fw fa-warning"></i>Campo requerido</p>
-                  </div>
-                </ng-form>                  
-              </div>
-              
-              
-              <!-- SUBMIT BUTTON -->
-              <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Guardar</button>
-              
+              <!-- botones -->
+              <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid" ng-click="saveStep(paso)">{{ btnMsg }}</button>
+              <button class="btn btn-danger" ng-click="hideStep()">Descartar</button>
             </form>
           </div>
         </div>
+
         <div class="col-lg-12">
             <div class="table-responsive" id="listOfCooks" style="display: none;">
               <h1 class="page-header">Lista de Logs</h1>
@@ -113,44 +154,44 @@
   </div>
 
   <!-- Modal container -->
-  <div class="modal fade" id="monitor-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal fade" id="input-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="slidemodal-container">
         <h1>Cambie contraseña</h1><br>
         <form name="changePassForm">
-          <input type="password" ng-model="user.oldPass" placeholder="Antigua contraseña">
+          <input type="password" id="textInputModal" ng-model="user.oldPass" placeholder="Antigua contraseña">
           <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña">
           <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña">
-          <button type="button" class="btn btn-primary btn-block" ng-click="cambiarContrasena(user)" data-dismiss="modal" ng-disabled="changePassForm.$invalid">Cambiar</button>
+          <button type="button" class="btn btn-primary btn-block" ng-click="UsersDAO.cambiarContrasena(user)" data-dismiss="modal" ng-disabled="changePassForm.$invalid">Cambiar</button>
         </form>
       </div>
     </div>
   </div>
 
   <!-- Modal container -->
-  <div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="slidemodal-container">
         <h1>Seleccione receta</h1><br>
-        <form>
+        <form name="selectResetaForm">
           <select ng-model="recetaNombre" ng-options="x for x in listaRecetas" required>
             <option value="">Seleccione Receta</option> 
           </select>
-          <button type="button" class="btn btn-primary btn-block" ng-click="startEditRecipe(recetaNombre)" data-dismiss="modal"> Modificar </button>
-          <button type="button" class="btn btn-danger btn-block" ng-click="deleteRecipe(recetaNombre)" data-dismiss="modal" href="#"> Borrar </button>
+          <button type="button" class="btn btn-primary btn-block" ng-click="startEditRecipe(recetaNombre)" data-dismiss="modal" ng-disabled="selectResetaForm.$invalid"> Modificar </button>
+          <button type="button" class="btn btn-danger btn-block" ng-click="deleteRecipe(recetaNombre)" data-dismiss="modal" ng-disabled="selectResetaForm.$invalid"> Borrar </button>
         </form>
       </div>
     </div>
   </div>
 
     <!-- Modal container -->
-  <div class="modal fade" id="fases-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal fade" id="rcpName-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="slidemodal-container">
-        <h1>Seleccione número de fases</h1><br>
-        <form name="fasesForm">
-          <input type="number" ng-model="numFases" required>
-          <button type="button" class="btn btn-primary btn-block" ng-click="createRecipe(numFases)" data-dismiss="modal" ng-disabled="fasesForm.$invalid"> Crear </button>
+        <h1>Ingrese nombre de la receta</h1><br>
+        <form name="rcpNameForm">
+          <input type="text" id="rcpNameInputModal" ng-model="recetaNombre" key-binding="createRecipe(recetaNombre)" key="13" required>
+          <button type="button" class="btn btn-primary btn-block" ng-click="createRecipe(recetaNombre)" ng-disabled="rcpNameForm.$invalid"> Crear </button>
         </form>
       </div>
     </div>

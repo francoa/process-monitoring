@@ -28,7 +28,7 @@
     "angular-messages": "~1.5.x",
     "angular-route": "~1.5.x",
     "angular-resource": "~1.5.x",
-    "bootstrap": "3.3.1",
+    "bootstrap": "3.3.7",
     "fontawesome": "~4.3.0"
   },
   "devDependencies": {

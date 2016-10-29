@@ -2,81 +2,161 @@
   'use strict';
 
   ng.module('process-monitoring')
-    .controller('AdminController', ['$log','$scope','$window','$http', function($log,$scope,$window,$http) {
+    .controller('AdminController', ['$scope','$window','$http', 'UsersDAO', function($scope,$window,$http,UsersDAO) {
+      /***********************/
+      /**     VARIABLES     **/
+      /***********************/
       var self = this;
-
-      $scope.alerta={"msg":"ESTE ES EL MSG Q VIENE DEL SERVER"}
-
+      $scope.UsersDAO = UsersDAO;
       $scope.sortType     = 'date'; // set the default sort type
       $scope.sortReverse  = true;  // set the default sort order
+      var pasoInitial = {"msg":"","detalle":"","autom":false, "img":null, "fases":[], "numFases":0};
+      $scope.paso = angular.copy(pasoInitial);
+      $scope.receta = {};
+      var newStep = -1;
+      $scope.btnMsg = "Agregar";
 
       //OBVIOUS TODO: GET RECIPES FROM SERVER
       $scope.listaRecetas = ["Receta 1", "Receta 2", "Receta 3"];
-      $scope.receta = {"nombre":"","fases":[]};
+      var recetaEdit = {"Nombre":"","Instrucciones":[
+        {"msg":"Calentar agua","autom":false, "detalle":"Encender el mechero hasta el herbor", "img": null, "fases":[], "numFases":0},
+        {"msg":"Colocar bombas para trasvase de agua","autom":true, "detalle":"Se debe abir esta valvula primero", "img": "/static/common/images/valvula1.jpg","fases":[{"temp":12, "time":12, "tdiff":12},{"temp":12, "time":12, "tdiff":12}], "numFases":2}
+        ]};
       $scope.logs = [{"date":"2016 05 15", "name":"Cook1"},{"date":"2016 06 15", "name":"Cook2"},{"date":"2016 05 03", "name":"Cook3"},{"date":"2016 05 30", "name":"Cook4"}]
-
-      $scope.logout=function(){
-        //OBVIOUS TODO: AUTH
-        $window.location.href='http://localhost:8000/'
+      /***********************/
+      /**     VARIABLES     **/
+      /***********************/
+        
+      /********************/
+      /**     RECETA     **/
+      /********************/
+      $scope.createRecipe=function(recetaNombre){
+        $("#rcpName-modal").modal('hide');
+        $scope.receta={"Nombre":recetaNombre, "Instrucciones":[]};
+        hideAll();
+        $('#recipeForm').show();
       };
 
-      $scope.cambiarContrasena = function(user){
-        $window.alert("Cambio de contraseña");
-      }
-
-      $scope.createRecipe=function(numFases){
-        $scope.receta={"nombre":"", "fases":[]};
-        var temp = {"temp":"", "tdiff": "", "time":""};
-        for (var i=0; i<numFases; i++){
-          temp.id=i;
-          $scope.receta.fases[i]=temp;
-        };
-        $('#recipeForm').show();
-        $('#listOfCooks').hide();
-        
+      $scope.hideRecipe=function(){
+        $scope.receta = {};
+        hideAll();
       };
 
       $scope.startEditRecipe=function(recetaNombre){
         //OBVIOUS TODO: GET DATA FROM SERVER
-        if (recetaNombre == "Receta 1"){
-          $scope.receta = {"nombre":"STOUT", "fases":[{"temp":50, "tdiff": 5, "time":60},{"temp":60, "tdiff": 5,"time":20},{"temp":70, "tdiff": 5, "time":10}]};
-        }
-        else if (recetaNombre == "Receta 2"){
-          $scope.receta = {"nombre":"LAGGER", "fases":[{"temp":40, "tdiff": 5, "time":40},{"temp":50, "tdiff": 2, "time":20},{"temp":60, "tdiff": 5,"time":20},{"temp":70, "tdiff": 5, "time":10}]};
-        }
-        else{
-          $scope.receta = {"nombre":"STOUT", "fases":[{"temp":50, "tdiff": 5, "time":60},{"temp":60, "tdiff": 5,"time":20},{"temp":70, "tdiff": 5, "time":10},{"temp":70, "tdiff": 5, "time":10},{"temp":70, "tdiff": 5, "time":10},{"temp":70, "tdiff": 5, "time":10},{"temp":70, "tdiff": 5, "time":10}]};
-        }
+        $scope.receta = angular.copy(recetaEdit);
+        $scope.receta.Nombre = recetaNombre;
+        hideAll();
         $('#recipeForm').show();
-        $('#listOfCooks').hide();
-      };
-
-      $scope.saveRecipe=function(){
-        //OBVIOUS TODO: POST DATA TO SERVER
-        $window.alert($scope.receta.nombre);
       };
 
       $scope.deleteRecipe=function(recetaNombre){
         //OBVIOUS TODO: POST DATA TO SERVER
         $window.alert(recetaNombre);
+        hideAll();
       };
 
+      $scope.saveRecipe=function(){
+        $window.alert("guardar" + $scope.receta);
+        hideAll();
+        $scope.receta = {};
+      };
+      /********************/
+      /**     RECETA     **/
+      /********************/
+
+      /******************/
+      /**     PASO     **/
+      /******************/
+      $scope.saveStep=function(paso){
+        if (newStep == -1)
+          $scope.receta.Instrucciones.push(paso);
+        else
+          $scope.receta.Instrucciones[newStep] = angular.copy(paso);
+        $scope.hideStep();
+      };
+
+      $scope.deleteStep=function(indice){
+        $scope.receta.Instrucciones.splice(indice,1);
+        $scope.hideStep();
+      };
+
+      $scope.addStep=function(){
+        $scope.paso = angular.copy(pasoInitial);
+        $('#pasoForm').show();
+        newStep = -1;
+        $scope.btnMsg = "Agregar";
+      };
+
+      $scope.hideStep=function(){
+        $('#pasoForm').hide();
+      };
+
+      $scope.editStep=function(indice){
+        $scope.paso = angular.copy($scope.receta.Instrucciones[indice]);
+        $('#pasoForm').show();
+        newStep = indice;
+        $scope.btnMsg = "Guardar";
+      };
+
+      $scope.moveUpStep=function(indice){
+        if (indice != 0){
+          var temp = angular.copy($scope.receta.Instrucciones[indice-1]);
+          $scope.receta.Instrucciones[indice-1] = angular.copy($scope.receta.Instrucciones[indice]);
+          $scope.receta.Instrucciones[indice] = angular.copy(temp);
+        }
+      };
+
+      $scope.moveDownStep=function(indice){
+        if (indice != $scope.receta.Instrucciones.length-1){
+          var temp = angular.copy($scope.receta.Instrucciones[indice+1]);
+          $scope.receta.Instrucciones[indice+1] = angular.copy($scope.receta.Instrucciones[indice]);
+          $scope.receta.Instrucciones[indice] = angular.copy(temp);
+        }
+      };
+
+      /******************/
+      /**     PASO     **/
+      /******************/
+
+      /******************/
+      /**     LOGS     **/
+      /******************/
       $scope.listCooking=function(){
+        hideAll();
         $('#listOfCooks').show();
-        $('#recipeForm').hide();
       };
-
-      $scope.supervision=function(){
-        
-      };     
 
       $scope.downloadLog=function(logNombre){
         $window.alert(logNombre);
       };
-
+      /******************/
+      /**     LOGS     **/
+      /******************/
+      
+      /*******************/
+      /**     MODALS    **/
+      /*******************/
       $scope.popupModal=function(name){
         $("#"+name).modal();
       };
+
+      $('#rcpName-modal').on('shown.bs.modal', function() {
+        $('#rcpNameInputModal').focus();
+      });
+      /*******************/
+      /**     MODALS    **/
+      /*******************/
      
+      $scope.getNumber=function(num){
+        return new Array(num);
+      };
+
+      var hideAll = function(){
+        $scope.hideStep();
+        $('#recipeForm').hide();
+        $('#listOfCooks').hide();
+      };
+
     }]);
 }(window.angular));

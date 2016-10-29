@@ -4,6 +4,10 @@
   ng.module('process-monitoring')
     .factory('UsersDAO', ['$window','$http',function($window,$http) {
 
+      $('#input-modal').on('shown.bs.modal', function() {
+        $('#textInputModal').focus();
+      });
+
       var api = {
         logout : function(){
           //OBVIOUS TODO: AUTH

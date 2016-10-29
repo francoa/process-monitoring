@@ -78,8 +78,14 @@
         timer = $interval(verifyInstruction,1000);
       };
 
+      /*******************/
+      /**     MODALS    **/
+      /*******************/
       $scope.popupModal=function(name){
         $("#"+name).modal();
       };
+      /*******************/
+      /**     MODALS    **/
+      /*******************/
     }]);
 }(window.angular));

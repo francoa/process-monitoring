@@ -11,5 +11,9 @@
         $window.location.href='https://www.google.com.ar/search?q='+keywords;
       };
 
+      $scope.popupModal=function(name){
+        $("#"+name).modal();
+      };
+
     }]);
 }(window.angular));

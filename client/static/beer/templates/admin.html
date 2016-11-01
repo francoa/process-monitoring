@@ -96,9 +96,15 @@
               </div><br>
               <!-- detalle -->
               <div class="row form-group">
-                <label>Detalles</label>
+                <label>Detalles (opcional) </label>
                 <textarea ng-model="paso.Detalle" class="form-control"/>
               </div><br>
+              <!-- imagen -->
+              <div class="row form-group">
+                <label>Imagen (opcional) </label>
+                <button type="button" ng-click="selectPic()">Seleccionar</button>
+                <input id="imginput" type="file" name="image" ng-show="false">
+              </div>
               <!-- fases ??? -->
               <div class="row form-group" ng-if="paso.autom == true">
                 <label>Ingrese Número de fases</label>

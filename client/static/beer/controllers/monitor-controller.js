@@ -49,7 +49,7 @@
       };
 
       $scope.startProcess=function(receta){
-        $window.alert(receta);
+        $("#pasosReceta").show();
       };
 
       $scope.logout=function(){

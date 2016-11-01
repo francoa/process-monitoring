@@ -158,5 +158,9 @@
         $('#listOfCooks').hide();
       };
 
+      $scope.selectPic=function(){
+        $('#imginput').trigger('click');
+      }
+
     }]);
 }(window.angular));

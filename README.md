@@ -41,3 +41,17 @@ Para el Monitor:
 
 # Preparado de muestra piloto (ver issues)
 - Hasta contar con un mejor tracking de horas, indicarlas en cada issue
+
+# Horas totales (al 1 Noviembre, 12:30 hs)
+- Preparación previa (Requisitos + scaffold) : 2.5h
+- Preparación previa (Django + cambio express -> django) : ? (10h?)
+- Issue 1 : ? (0h?)
+- Issue 2 : 3h
+- Issue 3 : ? (3h?)
+- Issue 4 : 5h
+- Issue 5 : 1.5h
+- Issue 13 : 2.5h
+- Issue 14 : ?
+- Issue 15 : ?
+- Issue 16 : ?
+- Issue 18 : ?

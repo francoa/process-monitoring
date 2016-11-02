@@ -4,6 +4,7 @@ node_modules
 unit_coverage
 bower_components
 typings
-
+migrations
+db.sqlite3
 __pycache__
 .DS_Store

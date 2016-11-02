@@ -15,8 +15,9 @@
       <!-- Top Menu Items -->
       <ul class="nav navbar-nav navbar-right top-nav">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i><b> Usuario </b><span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i><b> {{ username }} </b><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="popupModal('register-modal')"><i class="fa fa-fw fa-user-plus"></i> Crear usuario </a></li>
             <li><a href="#" ng-click="popupModal('input-modal')"><i class="fa fa-fw fa-gear"></i> Cambiar contraseña </a></li>
             <li class="divider"></li>
             <li><a href="#" ng-click="UsersDAO.logout()"><i class="fa fa-fw fa-sign-out"></i> Log Out </a></li>
@@ -158,49 +159,66 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Modal container -->
+<div class="modal fade" id="input-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="slidemodal-container">
+      <h1>Cambie contraseña</h1><br>
+      <form name="changePassForm">
+        <input type="password" id="textInputModal" ng-model="user.oldPass" placeholder="Antigua contraseña" required>
+        <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña" required>
+        <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña" required>
+        <button type="button" class="btn btn-primary btn-block" ng-click="UsersDAO.cambiarContrasena(user)" data-dismiss="modal" ng-disabled="changePassForm.$invalid">Cambiar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal container -->
+<div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="slidemodal-container">
+      <h1>Seleccione receta</h1><br>
+      <form name="selectResetaForm">
+        <select ng-model="recetaNombre" ng-options="x for x in listaRecetas" required>
+          <option value="">Seleccione Receta</option> 
+        </select>
+        <button type="button" class="btn btn-primary btn-block" ng-click="startEditRecipe(recetaNombre)" data-dismiss="modal" ng-disabled="selectResetaForm.$invalid"> Modificar </button>
+        <button type="button" class="btn btn-danger btn-block" ng-click="deleteRecipe(recetaNombre)" data-dismiss="modal" ng-disabled="selectResetaForm.$invalid"> Borrar </button>
+      </form>
+    </div>
+  </div>
+</div>
 
   <!-- Modal container -->
-  <div class="modal fade" id="input-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="slidemodal-container">
-        <h1>Cambie contraseña</h1><br>
-        <form name="changePassForm">
-          <input type="password" id="textInputModal" ng-model="user.oldPass" placeholder="Antigua contraseña">
-          <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña">
-          <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña">
-          <button type="button" class="btn btn-primary btn-block" ng-click="UsersDAO.cambiarContrasena(user)" data-dismiss="modal" ng-disabled="changePassForm.$invalid">Cambiar</button>
-        </form>
-      </div>
+<div class="modal fade" id="rcpName-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="slidemodal-container">
+      <h1>Ingrese nombre de la receta</h1><br>
+      <form name="rcpNameForm">
+        <input type="text" id="rcpNameInputModal" ng-model="recetaNombre" key-binding="createRecipe(recetaNombre)" key="13" required>
+        <button type="button" class="btn btn-primary btn-block" ng-click="createRecipe(recetaNombre)" ng-disabled="rcpNameForm.$invalid"> Crear </button>
+      </form>
     </div>
   </div>
+</div>
 
-  <!-- Modal container -->
-  <div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="slidemodal-container">
-        <h1>Seleccione receta</h1><br>
-        <form name="selectResetaForm">
-          <select ng-model="recetaNombre" ng-options="x for x in listaRecetas" required>
-            <option value="">Seleccione Receta</option> 
-          </select>
-          <button type="button" class="btn btn-primary btn-block" ng-click="startEditRecipe(recetaNombre)" data-dismiss="modal" ng-disabled="selectResetaForm.$invalid"> Modificar </button>
-          <button type="button" class="btn btn-danger btn-block" ng-click="deleteRecipe(recetaNombre)" data-dismiss="modal" ng-disabled="selectResetaForm.$invalid"> Borrar </button>
-        </form>
-      </div>
+<!-- Modal container -->
+<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="slidemodal-container">
+      <h1>Cree usuario</h1><br>
+      <form name="registerForm">
+        <input type="text" id="textInputModal" ng-model="user.username" placeholder="Nombre de usuario" required>
+        <input type="password" ng-model="user.pass" placeholder="Contraseña" required>
+        <input type="password" ng-model="user.pass2" placeholder="Repita contraseña" required>
+        <label> Tipo de usuario : </label>
+        Monitor <input type="radio" ng-model="user.manager" ng-value="false" required>
+        Admin <input type="radio" ng-model="user.manager" ng-value="true">
+        <button type="button" class="btn btn-primary btn-block" ng-click="UsersDAO.register(user)" data-dismiss="modal" ng-disabled="registerForm.$invalid"> Crear </button>
+      </form>
     </div>
   </div>
-
-    <!-- Modal container -->
-  <div class="modal fade" id="rcpName-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="slidemodal-container">
-        <h1>Ingrese nombre de la receta</h1><br>
-        <form name="rcpNameForm">
-          <input type="text" id="rcpNameInputModal" ng-model="recetaNombre" key-binding="createRecipe(recetaNombre)" key="13" required>
-          <button type="button" class="btn btn-primary btn-block" ng-click="createRecipe(recetaNombre)" ng-disabled="rcpNameForm.$invalid"> Crear </button>
-        </form>
-      </div>
-    </div>
-  </div>
-
 </div>

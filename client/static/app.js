@@ -4,6 +4,7 @@
   ng.module('process-monitoring', [
       'ngResource',
       'ngRoute',
-      'ngMessages'
+      'ngMessages',
+      'ngCookies'
     ]);
 }(window.angular));

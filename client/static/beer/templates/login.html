@@ -30,18 +30,18 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
+</div>
 
-  <!-- Modal container -->
-  <div class="modal fade" id="input-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Modal container -->
+<div class="modal fade" id="input-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="slidemodal-container">
       <h1>Ingrese usuario y contraseña</h1><br>
       <form name="loginForm">
-        <input type="text" id="textInputModal" ng-model="user.username" placeholder="Usuario">
-        <input type="password" ng-model="user.password" placeholder="Contraseña">
+        <input type="text" id="textInputModal" ng-model="user.username" placeholder="Usuario" required>
+        <input type="password" ng-model="user.password" placeholder="Contraseña" required>
         <button type="button" class="btn btn-primary btn-block" ng-click="UsersDAO.login(user)" data-dismiss="modal" ng-disabled="loginForm.$invalid"> Sign in </button>
       </form>
     </div>
   </div>
-
 </div>

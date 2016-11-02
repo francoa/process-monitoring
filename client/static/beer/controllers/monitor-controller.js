@@ -6,6 +6,14 @@
       var self = this;
       $scope.UsersDAO = UsersDAO;
 
+      var activate = function(){
+        if (!UsersDAO.isAuthenticated() || UsersDAO.isAdmin())
+          UsersDAO.redirect();
+      };
+      activate();
+
+      $scope.username = UsersDAO.getUserName();
+
       var timer;
 
       //OBVIOUS TODO: GET RECIPES FROM SERVER

@@ -55,3 +55,6 @@ Para el Monitor:
 - Issue 15 : ?
 - Issue 16 : ?
 - Issue 18 : ?
+- Issue 19 : ?
+- Issue 20 : ?
+- Issue 21 : ?

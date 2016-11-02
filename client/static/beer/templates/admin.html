@@ -167,6 +167,7 @@
     <div class="slidemodal-container">
       <h1>Cambie contraseña</h1><br>
       <form name="changePassForm">
+        <input type="text" ng-model="user.username" style="display: none">
         <input type="password" id="textInputModal" ng-model="user.oldPass" placeholder="Antigua contraseña" required>
         <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña" required>
         <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña" required>
@@ -211,13 +212,13 @@
     <div class="slidemodal-container">
       <h1>Cree usuario</h1><br>
       <form name="registerForm">
-        <input type="text" id="textInputModal" ng-model="user.username" placeholder="Nombre de usuario" required>
-        <input type="password" ng-model="user.pass" placeholder="Contraseña" required>
-        <input type="password" ng-model="user.pass2" placeholder="Repita contraseña" required>
+        <input type="text" id="textInputModal" ng-model="newuser.username" placeholder="Nombre de usuario" required>
+        <input type="password" ng-model="newuser.pass" placeholder="Contraseña" required>
+        <input type="password" ng-model="newuser.pass2" placeholder="Repita contraseña" required>
         <label> Tipo de usuario : </label>
-        Monitor <input type="radio" ng-model="user.manager" ng-value="false" required>
-        Admin <input type="radio" ng-model="user.manager" ng-value="true">
-        <button type="button" class="btn btn-primary btn-block" ng-click="UsersDAO.register(user)" data-dismiss="modal" ng-disabled="registerForm.$invalid"> Crear </button>
+        Monitor <input type="radio" ng-model="newuser.manager" ng-value="false" required>
+        Admin <input type="radio" ng-model="newuser.manager" ng-value="true">
+        <button type="button" class="btn btn-primary btn-block" ng-click="UsersDAO.register(newuser)" data-dismiss="modal" ng-disabled="registerForm.$invalid"> Crear </button>
       </form>
     </div>
   </div>

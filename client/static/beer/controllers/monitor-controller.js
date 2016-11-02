@@ -13,6 +13,8 @@
       activate();
 
       $scope.username = UsersDAO.getUserName();
+      $scope.user = {'username':''};
+      $scope.user.username = $scope.username;
 
       var timer;
 

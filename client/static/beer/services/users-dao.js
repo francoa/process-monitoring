@@ -71,6 +71,7 @@
         cambiarContrasena : function(user){
           if(user.newPass === user.repeatPass){
             return $http.put('/api/v1/accounts/', {
+              username: user.username,
               password: user.oldPass,
               new_password: user.newPass,
               confirm_password: user.repeatPass

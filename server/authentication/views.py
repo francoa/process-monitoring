@@ -23,8 +23,8 @@ class AccountViewSet(viewsets.ModelViewSet):
     # The only user able to modify should be the owner
     def get_permissions(self):
         # If the method is safe allow
-        if self.request.method in permissions.SAFE_METHODS:
-            return (permissions.AllowAny(),)
+        # if self.request.method in permissions.SAFE_METHODS:
+            # return (permissions.AllowAny(),)
         # If it is just POST allow
         if self.request.method == 'POST':
             return (permissions.AllowAny(),)
@@ -42,12 +42,40 @@ class AccountViewSet(viewsets.ModelViewSet):
             'manage': 'Account could not be created with received data'
         }, status=status.HTTP_400_BAD_REQUEST)
 
+    def update(self, request):
+        data = request.data
+        # Extract email and password from request
+        username = data.get('username', None)
+        password = data.get('password', None)
+        # Authenticate information
+        account = authenticate(username=username, password=password)
+        print(account)
+        if account is not None:
+            if account.is_active:
+                serializer = self.serializer_class(data=request.data)
+                if serializer.is_valid():
+                    return Response(serializer.data)
+                return Response({
+                    'status': 'Bad request',
+                    'manage': 'Account could not be created with received data'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({
+                    'status': 'Unauthorized',
+                    'manage': 'This account has been disabled'
+                }, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response({
+                'status': 'Unauthorized',
+                'manage': 'Username/password combination invalid'
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
 
 # We are not using the most generic class because
 # views.APIView are made specifically to handle AJAX requests
 class LoginView(views.APIView):
     def post(self, request, format=None):
-        data = json.loads(request.body.decode('utf-8'))
+        data = request.data
         # Extract email and password from request
         username = data.get('username', None)
         password = data.get('password', None)

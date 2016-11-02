@@ -16,6 +16,8 @@
       activate();
 
       $scope.username = UsersDAO.getUserName();
+      $scope.user = {'username':''};
+      $scope.user.username = $scope.username;
 
       $scope.sortType     = 'date'; // set the default sort type
       $scope.sortReverse  = true;  // set the default sort order

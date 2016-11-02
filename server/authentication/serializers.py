@@ -15,8 +15,8 @@ class AccountSerializer(serializers.ModelSerializer):
         # Specifies the model so only attributes of this model can be serialized
         model = Account
         # Here we specifies which attributes of the Account model should be serialized
-        fields = ('id', 'username', 'manager', 'created_at', 'updated_at', 'password', 'new_password',
-                  'confirm_password',)
+        fields = ('id', 'username', 'manager', 'created_at', 'updated_at', 'password',
+                  'new_password','confirm_password',)
         read_only_fields = ('created_at', 'updated_at')
 
         # Deserialization: process to convert JSON to Python Object
@@ -33,7 +33,6 @@ class AccountSerializer(serializers.ModelSerializer):
 
             instance.save()
 
-            password = validated_data.get('password', None)
             new_password = validated_data.get('new_password', None)
             confirm_password = validated_data.get('confirm_password', None)
 

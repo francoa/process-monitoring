@@ -8,6 +8,15 @@
       /***********************/
       var self = this;
       $scope.UsersDAO = UsersDAO;
+
+      var activate = function(){
+        if (!UsersDAO.isAuthenticated() || !UsersDAO.isAdmin())
+          UsersDAO.redirect();
+      };
+      activate();
+
+      $scope.username = UsersDAO.getUserName();
+
       $scope.sortType     = 'date'; // set the default sort type
       $scope.sortReverse  = true;  // set the default sort order
       var pasoInitial = {"msg":"","detalle":"","autom":false, "img":null, "fases":[], "numFases":0};

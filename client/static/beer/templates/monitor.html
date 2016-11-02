@@ -15,7 +15,7 @@
       <!-- Top Menu Items -->
       <ul class="nav navbar-nav navbar-right top-nav">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i><b> Usuario </b><span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i><b> {{ username }} </b><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a ng-click="popupModal('input-modal')" href="#"><i class="fa fa-fw fa-gear"></i> Cambiar contraseña </a></li>
             <li class="divider"></li>
@@ -77,32 +77,32 @@
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Modal container -->
-  <div class="modal fade" id="input-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="slidemodal-container">
-        <h1>Cambie contraseña</h1><br>
-        <form name="changePassForm">
-          <input type="password" id="textInputModal" ng-model="user.oldPass" placeholder="Antigua contraseña">
-          <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña">
-          <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña">
-          <button type="button" class="btn btn-primary btn-block" ng-click="UsersDAO.cambiarContrasena(user)" data-dismiss="modal" ng-disabled="changePassForm.$invalid">Cambiar</button>
-        </form>
-      </div>
+<!-- Modal container -->
+<div class="modal fade" id="input-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="slidemodal-container">
+      <h1>Cambie contraseña</h1><br>
+      <form name="changePassForm">
+        <input type="password" id="textInputModal" ng-model="user.oldPass" placeholder="Antigua contraseña" required>
+        <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña" required>
+        <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña" required>
+        <button type="button" class="btn btn-primary btn-block" ng-click="UsersDAO.cambiarContrasena(user)" data-dismiss="modal" ng-disabled="changePassForm.$invalid">Cambiar</button>
+      </form>
     </div>
   </div>
+</div>
 
-  <!-- Modal container -->
-  <div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="slidemodal-container">
-        <h1>Seleccione receta para comenzar</h1><br>
-        <form>
-          <select ng-model="receta" ng-options="x for x in recetas"></select>
-          <button type="button" class="btn btn-primary btn-block" ng-click="startProcess(receta)" data-dismiss="modal"> Comenzar </button>
-        </form>
-      </div>
+<!-- Modal container -->
+<div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="slidemodal-container">
+      <h1>Seleccione receta para comenzar</h1><br>
+      <form name="recipeSelectForm">
+        <select ng-model="receta" ng-options="x for x in recetas" required></select>
+        <button type="button" class="btn btn-primary btn-block" ng-click="startProcess(receta)" data-dismiss="modal" ng-disabled="recipeSelectForm.$invalid"> Comenzar </button>
+      </form>
     </div>
   </div>
 </div>

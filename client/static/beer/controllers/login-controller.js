@@ -2,9 +2,15 @@
   'use strict';
 
   ng.module('process-monitoring')
-    .controller('LoginController', ['$scope','$window','$http', 'UsersDAO', function($scope,$window,$http,UsersDAO) {
+    .controller('LoginController', ['$scope','$window','UsersDAO', function($scope,$window,UsersDAO) {
       var self = this;
       $scope.UsersDAO = UsersDAO;
+
+      var activate = function(){
+        if (UsersDAO.isAuthenticated())
+          UsersDAO.redirect();
+      };
+      activate();
 
       $scope.searchGoogle=function(keywords){
         keywords = keywords.replace(" ","+");

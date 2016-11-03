@@ -18,9 +18,13 @@ from django.contrib import admin
 from views import IndexView
 from rest_framework_nested import routers
 from authentication.views import AccountViewSet, LoginView, LogoutView
+from cookbook.views import RecipeViewSet, DirectionViewSet, MonitorRecipeViewSet
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
+router.register(r'recipe', viewset=RecipeViewSet)
+router.register(r'monitor_recipe', viewset=MonitorRecipeViewSet)
+router.register(r'direction', viewset=DirectionViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

@@ -3,7 +3,7 @@ from django.db import models
 
 class Direction(models.Model):
     # Instruction itself
-    title = models.CharField(max_length=100, unique=True)
+    title = models.CharField(max_length=100)
     # Temperature and time when is needed
     temp = models.DecimalField(default=0, max_digits=5, decimal_places=2, blank=True)
     duration = models.PositiveSmallIntegerField(default=0, blank=True)

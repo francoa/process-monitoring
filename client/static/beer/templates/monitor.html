@@ -77,32 +77,33 @@
       </div>
     </div>
   </div>
-</div>
 
-<!-- Modal container -->
-<div class="modal fade" id="input-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="slidemodal-container">
-      <h1>Cambie contraseña</h1><br>
-      <form name="changePassForm">
-        <input type="password" id="textInputModal" ng-model="user.oldPass" placeholder="Antigua contraseña" required>
-        <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña" required>
-        <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña" required>
-        <button type="button" class="btn btn-primary btn-block" ng-click="UsersDAO.cambiarContrasena(user)" data-dismiss="modal" ng-disabled="changePassForm.$invalid">Cambiar</button>
-      </form>
+  <!-- Modal container -->
+  <div class="modal fade" id="input-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="slidemodal-container">
+        <h1>Cambie contraseña</h1><br>
+        <form name="changePassForm">
+          <input type="password" id="textInputModal" ng-model="user.oldPass" placeholder="Antigua contraseña" required>
+          <input type="password" ng-model="user.newPass" placeholder="Nueva contraseña" required>
+          <input type="password" ng-model="user.repeatPass" placeholder="Repita contraseña" required>
+          <button type="button" class="btn btn-primary btn-block" ng-click="UsersDAO.cambiarContrasena(user)" data-dismiss="modal" ng-disabled="changePassForm.$invalid">Cambiar</button>
+        </form>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Modal container -->
-<div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="slidemodal-container">
-      <h1>Seleccione receta para comenzar</h1><br>
-      <form name="recipeSelectForm">
-        <select ng-model="receta" ng-options="x for x in recetas" required></select>
-        <button type="button" class="btn btn-primary btn-block" ng-click="startProcess(receta)" data-dismiss="modal" ng-disabled="recipeSelectForm.$invalid"> Comenzar </button>
-      </form>
+  <!-- Modal container -->
+  <div class="modal fade" id="recipe-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="slidemodal-container">
+        <h1>Seleccione receta para comenzar</h1><br>
+        <form name="recipeSelectForm">
+          <select ng-model="receta" ng-options="x for x in recetas" required></select>
+          <button type="button" class="btn btn-primary btn-block" ng-click="startProcess(receta)" data-dismiss="modal" ng-disabled="recipeSelectForm.$invalid"> Comenzar </button>
+        </form>
+      </div>
     </div>
   </div>
+
 </div>

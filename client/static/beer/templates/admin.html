@@ -102,9 +102,9 @@
               </div><br>
               <!-- imagen -->
               <div class="row form-group">
-                <label>Imagen (opcional) </label>
+                <label>Imagen (opcional) : {{ paso.img }} </label>
                 <button type="button" ng-click="selectPic()">Seleccionar</button>
-                <input id="imginput" type="file" name="image" ng-show="false">
+                <input id="imginput" type="file" name="image" ng-model="paso.img" ng-show="false">
               </div>
               <!-- fases ??? -->
               <div class="row form-group" ng-if="paso.autom == true">

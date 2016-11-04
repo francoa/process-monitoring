@@ -2,7 +2,10 @@
   'use strict';
 
   ng.module('process-monitoring')
-    .controller('AdminController', ['$scope','$window','$http', 'UsersDAO', function($scope,$window,$http,UsersDAO) {
+    .controller('AdminController', 
+      ['$scope','$window','$http', 'UsersDAO', 'RecipeDAO', 
+      function($scope,$window,$http,UsersDAO,RecipeDAO) {
+
       /***********************/
       /**     VARIABLES     **/
       /***********************/
@@ -21,19 +24,14 @@
 
       $scope.sortType     = 'date'; // set the default sort type
       $scope.sortReverse  = true;  // set the default sort order
-      var pasoInitial = {"msg":"","detalle":"","autom":false, "img":null, "fases":[], "numFases":0};
-      $scope.paso = angular.copy(pasoInitial);
       $scope.receta = {};
       var newStep = -1;
       $scope.btnMsg = "Agregar";
-
-      //OBVIOUS TODO: GET RECIPES FROM SERVER
-      $scope.listaRecetas = ["Receta 1", "Receta 2", "Receta 3"];
-      var recetaEdit = {"Nombre":"","Instrucciones":[
-        {"msg":"Calentar agua","autom":false, "detalle":"Encender el mechero hasta el herbor", "img": null, "fases":[], "numFases":0},
-        {"msg":"Colocar bombas para trasvase de agua","autom":true, "detalle":"Se debe abir esta valvula primero", "img": "/static/common/images/valvula1.jpg","fases":[{"temp":12, "time":12, "tdiff":12},{"temp":12, "time":12, "tdiff":12}], "numFases":2}
-        ]};
-      $scope.logs = [{"date":"2016 05 15", "name":"Cook1"},{"date":"2016 06 15", "name":"Cook2"},{"date":"2016 05 03", "name":"Cook3"},{"date":"2016 05 30", "name":"Cook4"}]
+      $scope.listaRecetas = RecipeDAO.getRecipesNames();
+      $scope.logs = RecipeDAO.getLogs();
+      var pasoTemplate = {"msg":"","detalle":"","autom":false, "img":null, "fases":[], "numFases":0};
+      var recetaTemplate = {"Nombre":recetaNombre, "Instrucciones":[]};
+      $scope.paso = angular.copy(pasoTemplate);
       /***********************/
       /**     VARIABLES     **/
       /***********************/
@@ -42,10 +40,16 @@
       /**     RECETA     **/
       /********************/
       $scope.createRecipe=function(recetaNombre){
-        $("#rcpName-modal").modal('hide');
-        $scope.receta={"Nombre":recetaNombre, "Instrucciones":[]};
-        hideAll();
-        $('#recipeForm').show();
+        RecipeDAO.getRecipeName(
+          function(){
+            $("#rcpName-modal").modal('hide');
+            $scope.receta=recetaTemplate;
+            hideAll();
+            $('#recipeForm').show();
+          },function(){
+            $window.alert("Nombre repetido, elija otro nombre.");
+          }, recetaNombre
+        );
       };
 
       $scope.hideRecipe=function(){
@@ -54,21 +58,19 @@
       };
 
       $scope.startEditRecipe=function(recetaNombre){
-        //OBVIOUS TODO: GET DATA FROM SERVER
-        $scope.receta = angular.copy(recetaEdit);
+        $scope.receta = RecipeDAO.getRecipe(recetaNombre);
         $scope.receta.Nombre = recetaNombre;
         hideAll();
         $('#recipeForm').show();
       };
 
       $scope.deleteRecipe=function(recetaNombre){
-        //OBVIOUS TODO: POST DATA TO SERVER
-        $window.alert(recetaNombre);
+        RecipeDAO.deleteRecipe(recetaNombre);
         hideAll();
       };
 
       $scope.saveRecipe=function(){
-        $window.alert("guardar" + $scope.receta);
+        RecipeDAO.saveRecipe($scope.receta);
         hideAll();
         $scope.receta = {};
       };
@@ -93,7 +95,7 @@
       };
 
       $scope.addStep=function(){
-        $scope.paso = angular.copy(pasoInitial);
+        $scope.paso = angular.copy(pasoTemplate);
         $('#pasoForm').show();
         newStep = -1;
         $scope.btnMsg = "Agregar";
@@ -139,7 +141,7 @@
       };
 
       $scope.downloadLog=function(logNombre){
-        $window.alert(logNombre);
+        RecipeDAO.getLog(logNombre);
       };
       /******************/
       /**     LOGS     **/
@@ -158,7 +160,17 @@
       /*******************/
       /**     MODALS    **/
       /*******************/
-     
+
+      /******************/
+      /**     IMAGE    **/
+      /******************/
+      $scope.selectPic=function(){
+        $('#imginput').trigger('click');
+      }
+      /******************/
+      /**     IMAGE    **/
+      /******************/
+
       $scope.getNumber=function(num){
         return new Array(num);
       };
@@ -168,10 +180,6 @@
         $('#recipeForm').hide();
         $('#listOfCooks').hide();
       };
-
-      $scope.selectPic=function(){
-        $('#imginput').trigger('click');
-      }
 
     }]);
 }(window.angular));

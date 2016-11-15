@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 const BeerDAO = require('../dao/beer-dao');
 

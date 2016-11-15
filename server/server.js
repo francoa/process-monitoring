@@ -21,8 +21,20 @@ RoutesConfig.init(app);
 //DBConfig.init();
 Routes.init(app, express.Router());
 
+/****** SERVER INIT ******/
 
-/****** GRACEFULLY CLOSE (NO FUNCA) ******/
+const opts = {
+  key: fs.readFileSync(__dirname + '/cert/server.key'),
+  cert: fs.readFileSync(__dirname + '/cert/server.crt')
+}
+
+var server = https.createServer(opts, app)
+  .listen(PORT, () => {
+    console.log(`up and running @: ${os.hostname()} on port: ${PORT}`);
+    console.log(`enviroment: ${process.env.NODE_ENV}`);
+  });
+
+/****** GRACEFULLY CLOSE (FUNCA?) ******/
 
 if (process.platform === "win32") {
   require("readline")
@@ -35,33 +47,19 @@ if (process.platform === "win32") {
     });
 }
 
-process.on("exit", function(code){
-	console.log("quit");
-	//DBConfig.close();
-});
+var gracefulShutdown = function(){
+  console.log("Exiting server");
+  //DBConfig.close();
+  server.close(function(){
+    process.exit();
+  })
+};
+
 process.on("SIGINT", function(){
-	console.log("process");
-	process.exit(0);
+  gracefulShutdown();
 });
+
 process.on("SIGTERM", function(){
-	console.log("process2");
-    process.exit(0);
+  gracefulShutdown();
 });
 
-/****** SERVER INIT ******/
-
-const opts = {
-  key: fs.readFileSync(__dirname + '/cert/server.key'),
-  cert: fs.readFileSync(__dirname + '/cert/server.crt')
-}
-
-app.post('/login',function(req,res){
-  console.log(req.body);
-  res.status(200).send({admin: false, username: req.body.username});
-})
-
-var server = https.createServer(opts, app)
-     .listen(PORT, () => {
-       console.log(`up and running @: ${os.hostname()} on port: ${PORT}`);
-       console.log(`enviroment: ${process.env.NODE_ENV}`);
-     });

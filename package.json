@@ -1,0 +1,43 @@
+{
+  "name": "process-monitoring",
+  "version": "0.0.1",
+  "main": "src/process-monitoring.js",
+  "scripts": {
+    "start": "node index",
+    "watch": "gulp",
+    "dev": "concurrently \"npm start\" \"gulp\"",
+    "build-dev": "node index && gulp client.watch",
+    "build-dist": "gulp client.build:dist"
+  },
+  "dependencies": {
+    "body-parser": "^1.5.0",
+    "express": "~4.14.0",
+    "express-content-length-validator": "1.0.0",
+    "helmet": "^2.1.1",
+    "morgan": "^1.5.2",
+    "multer": "^1.2.0",
+    "newrelic": "^1.18.2"
+  },
+  "devDependencies": {
+    "concurrently": "^2.0.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "jshint": "^2.9.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/francoa/process-monitoring.git"
+  },
+  "author": "francoa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/francoa/process-monitoring/issues"
+  },
+  "homepage": "https://github.com/francoa/process-monitoring",
+  "engines": {
+    "node": "stable"
+  }
+}

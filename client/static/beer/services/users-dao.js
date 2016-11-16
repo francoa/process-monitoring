@@ -49,17 +49,17 @@
 
       var api = {
         logout : function(){
-          return $http.post('/api/v1/auth/logout/').then(logoutSuccessFn, logoutErrorFn);
+          return $http.post('/api/users/auth/logout/').then(logoutSuccessFn, logoutErrorFn);
         },
         login : function(user){
-          return $http.post('/api/v1/auth/login/', {
+          return $http.post('/api/users/auth/login/', {
             username: user.username,
             password: user.password
           }).then(loginSuccessFn, loginErrorFn);
         },
         register : function(user){
           if(user.pass === user.pass2){
-            return $http.post('/api/v1/accounts/', {
+            return $http.post('/api/users/accounts/', {
               username: user.username,
               password: user.pass,
               manager: user.manager
@@ -70,7 +70,7 @@
         },
         cambiarContrasena : function(user){
           if(user.newPass === user.repeatPass){
-            return $http.put('/api/v1/accounts/', {
+            return $http.put('/api/users/accounts/', {
               username: user.username,
               password: user.oldPass,
               new_password: user.newPass,

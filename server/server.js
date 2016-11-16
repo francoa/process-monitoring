@@ -10,7 +10,7 @@ const os = require('os'),
       express = require('express'),
       fs = require('fs'),
       RoutesConfig = require('./config/routes.conf'),
-      //DBConfig = require('./config/db.conf'),
+      DBConfig = require('./config/db.conf'),
       Routes = require('./routes/index'),
       app = express();
 
@@ -18,7 +18,12 @@ const os = require('os'),
 /****** USE ******/
 
 RoutesConfig.init(app);
-//DBConfig.init();
+try{
+  DBConfig.init();
+}catch(err){
+  console.log(err);
+  gracefulShutdown();
+}
 Routes.init(app, express.Router());
 
 /****** SERVER INIT ******/

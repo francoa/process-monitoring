@@ -1,20 +1,30 @@
 "use strict";
 
 const UsersDAO = require('../dao/users-dao');
+const secur = require('../../auth/auth.js');
 
 module.exports = class UsersController {
   static logout(req, res) {
     UsersDAO
-      .logout()
-      .then()
-      .catch();
+      .logout(req)
+      .then(function(){
+        secur.clearCookieData(res);
+        res.sendStatus(200);
+      })
+      .catch(err => res.status(err.code).send(err.msg));
   }
 
-  static login(req, res) {
+  static login(req,res) {
     UsersDAO
-      .login()
-      .then()
-      .catch();
+      .login(req)
+      .then(function(username,admin){
+        secur.setCookieData(req,res,username);
+        if (admin)
+          res.status(200).send({'username': username, 'admin': true});
+        else
+          res.status(200).send({'username': username, 'admin': false});
+      })
+      .catch(err => res.status(err.code).send(err.msg));
   }
 
   static register(req, res) {

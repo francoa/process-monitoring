@@ -25,7 +25,7 @@
       };
 
       function loginErrorFn(data, status, headers, config) {
-        $window.alert("Usuario o contraseña incorrectas. Verifique sus datos.")
+        $window.alert("Usuario o contraseña incorrectas. Verifique sus datos. "+ data)
       };
 
       function logoutSuccessFn(data, status, headers, config) {

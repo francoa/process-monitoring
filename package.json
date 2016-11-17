@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "body-parser": "^1.5.0",
+    "cookies": "^0.6.2",
     "express": "~4.14.0",
     "express-content-length-validator": "1.0.0",
     "helmet": "^2.1.1",

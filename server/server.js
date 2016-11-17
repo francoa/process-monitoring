@@ -18,12 +18,7 @@ const os = require('os'),
 /****** USE ******/
 
 RoutesConfig.init(app);
-try{
-  DBConfig.init();
-}catch(err){
-  console.log(err);
-  gracefulShutdown();
-}
+DBConfig.init(function(err){ console.log(err); gracefulShutdown(); });
 Routes.init(app, express.Router());
 
 /****** SERVER INIT ******/
@@ -39,7 +34,7 @@ var server = https.createServer(opts, app)
     console.log(`enviroment: ${process.env.NODE_ENV}`);
   });
 
-/****** GRACEFULLY CLOSE (FUNCA?) ******/
+/****** GRACEFULLY CLOSE (NO FUNCA -> GULP) ******/
 
 if (process.platform === "win32") {
   require("readline")
@@ -57,7 +52,7 @@ var gracefulShutdown = function(){
   //DBConfig.close();
   server.close(function(){
     process.exit();
-  })
+  });
 };
 
 process.on("SIGINT", function(){

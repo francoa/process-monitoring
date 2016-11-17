@@ -1,51 +1,49 @@
 "use strict";
 
-const mongoose = require('mongoose');
+const DBConfig = require('../../../config/db.conf');
 const Promise = require('bluebird');
-const beerSchema = require('../model/beer-model');
 const _ = require('lodash');
 
-beerSchema.statics.getAll = () => {
+module.exports = class UsersDAO {
+
+  static logout(req){
     return new Promise((resolve, reject) => {
-        let _query = {};
-
-        Beer
-          .find(_query)
-          .exec((err, beers) => {
-              err ? reject(err)
-                  : resolve(beers);
-          });
-      });
-}
-
-beerSchema.statics.createBeer = (beer) => {
-    return new Promise((resolve, reject) => {
-      if (!_.isObject(beer))
-          return reject(new TypeError('Beer is not a valid object.'));
-
-      let _beer = new Beer(beer);
-
-      _beer.save((err, saved) => {
-        err ? reject(err)
-            : resolve(saved);
-      });
+      if (req.username)
+        return resolve()
+      return reject({'code':400,'msg':'Cookies error'}); //400??
     });
-}
+  };
 
-beerSchema.statics.deleteBeer = (id) => {
-    return new Promise((resolve, reject) => {
-        if (!_.isString(id))
-            return reject(new TypeError('Id is not a valid string.'));
+  static login(req){
+    return new Promise((resolve,reject) => {
+      var loginData = req.body;
+      if (!loginData.hasOwnProperty('password') || loginData['password'] === '')
+        return reject({'code':400,'msg':'Missing password'});
+      if (!loginData.hasOwnProperty('username') || loginData['username'] === '') 
+        return reject({'code':400,'msg':'Missing username'});
 
-        Beer
-          .findByIdAndRemove(id)
-          .exec((err, deleted) => {
-              err ? reject(err)
-                  : resolve();
-          });
+      DBConfig.verifyUsernamePassword(loginData.username,loginData.password,
+        function(admin){return resolve(loginData.username,admin)},function(err){return reject(err)});
+
     });
+  };
+
+  static register(){};
+
+  static changePass(){};
+
+  /*beerSchema.statics.createBeer = (beer) => {
+      return new Promise((resolve, reject) => {
+        if (!_.isObject(beer))
+            return reject(new TypeError('Beer is not a valid object.'));
+
+        let _beer = new Beer(beer);
+
+        _beer.save((err, saved) => {
+          err ? reject(err)
+              : resolve(saved);
+        });
+      });
+  }*/
+
 }
-
-const Beer  = mongoose.model('Beer', beerSchema);
-
-module.exports = Beer;

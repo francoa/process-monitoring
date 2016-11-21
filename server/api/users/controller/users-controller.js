@@ -63,4 +63,26 @@ module.exports = class UsersController {
       });
   }  
 
+  static getUsers(req,res){
+    UsersDAO
+      .getUsers(req)
+      .then(function(users){
+        res.status(200).send({'users':users});
+      })
+      .catch(function(err){
+        console.log(err.msg);
+        res.status(err.code).send(err.msg);
+      });
+  }
+
+  static deleteUser(req,res){
+    UsersDAO
+      .deleteUser(req)
+      .then(function(){res.sendStatus(200)})
+      .catch(function(err){
+        console.log(err.msg);
+        res.status(err.code).send(err.msg);
+      });
+  }
+
 }

@@ -20,7 +20,7 @@ module.exports = class DBConfig {
 			if (!exists){
 				console.log("Newly created database, adding default admin user.");
 				db.exec("CREATE TABLE Table_Users (username TEXT NOT NULL UNIQUE, \
-					password TEXT NOT NULL, salt TEXT NOT NULL, isAdmin \
+					password TEXT NOT NULL, salt TEXT NOT NULL, admin \
 					BOOLEAN NOT NULL);", errorFn);
 				DBConfig.createUser("admin","admin",true,errCbck,callback);
 	      	}
@@ -117,13 +117,13 @@ module.exports = class DBConfig {
                 if (secPass['pass'] !== pass)
                     errCbck({'code':401, 'msg':"Wrong username or password"});
                 else
-                    callback(row['isAdmin']);
+                    callback(row['admin']);
             }
         };
 
 
         db.serialize(function(){
-          db.get("SELECT password,salt,isAdmin FROM Table_Users WHERE username==?",username,rowReturnFn);  
+          db.get("SELECT password,salt,admin FROM Table_Users WHERE username==?",username,rowReturnFn);  
         })
     }
 
@@ -134,11 +134,34 @@ module.exports = class DBConfig {
             else if (row == undefined)
                 errCbck({'code':401, 'msg':"No such username"});
             else
-                callback(row['isAdmin']);
+                callback(row['admin']);
         };
 
         db.serialize(function(){
-            db.get("SELECT isAdmin FROM Table_Users WHERE username==?",username,rowReturnFn);
+            db.get("SELECT admin FROM Table_Users WHERE username==?",username,rowReturnFn);
+        })
+    }
+
+    static getUsers(errCbck,callback){
+        var rowReturnFn = function(err,rows){
+           if (err!=null)
+                errCbck({'code':500, 'msg':err.Error});
+            else if (rows == undefined || rows == [])
+                errCbck({'code':401, 'msg':"No such username"});
+            else{
+                rows.forEach(function(e){
+                    if (e.admin == 1)
+                        e.admin = true;
+                    else
+                        e.admin = false;
+                });
+                console.log(rows);
+                callback(rows);
+            }
+        };
+
+        db.serialize(function(){
+            db.all("SELECT username,admin FROM Table_Users",rowReturnFn);
         })
     }
 

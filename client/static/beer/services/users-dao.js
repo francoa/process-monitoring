@@ -111,6 +111,12 @@
         getUserName : function(){
           var account = JSON.parse($cookies.get(cookieName));
           return account.username;
+        },
+        getUsers : function(){
+          return $http.get('/api/users/accounts');
+        },
+        deleteUser : function(userName, pass){
+          return $http.post('api/users/accounts/delete',{username:userName,my_pass:pass});
         }
       };
 

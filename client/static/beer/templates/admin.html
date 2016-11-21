@@ -174,10 +174,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="x in users" >
-                            <td width="50%">{{ x.date }}</td>
-                            <td width="30%">{{ x.name }}</td>
-                            <td width="20%" align="center"><a href="#" ng-click="deleteUser(x.name)"><i class="fa fa-fw fa-delete"></i></a></td>
+                        <tr ng-repeat="x in beerUsers" >
+                            <td width="50%">{{ x.username }}</td>
+                            <td width="30%">{{ x.admin }}</td>
+                            <td width="20%" align="center"><a href="#" ng-click="deleteUser(x.username,$index)" ng-if="x.username != username"><i class="fa fa-fw fa-trash"></i></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -229,6 +229,19 @@
         <form name="rcpNameForm">
           <input type="text" id="rcpNameInputModal" ng-model="recetaNombre" key-binding="createRecipe(recetaNombre)" key="13" required>
           <button type="button" class="btn btn-primary btn-block" ng-click="createRecipe(recetaNombre)" ng-disabled="rcpNameForm.$invalid"> Crear </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal container -->
+  <div class="modal fade" id="password-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="slidemodal-container">
+        <h1>Ingrese contraseña</h1><br>
+        <form name="passForm">
+          <input type="password" id="passwordInputModal" ng-model="passInput" key-binding="deleteU(passInput)" key="13" required>
+          <button type="button" class="btn btn-primary btn-block" ng-click="deleteU(passInput)" ng-disabled="passForm.$invalid"> Borrar usuario </button>
         </form>
       </div>
     </div>

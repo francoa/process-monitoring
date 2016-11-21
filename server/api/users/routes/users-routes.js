@@ -16,6 +16,11 @@ module.exports = class UsersRoutes {
       router
         .route('/api/users/accounts')
         .post(secur.extractCookieData,UsersController.register)
-        .put(secur.extractCookieData,UsersController.changePass);
+        .put(secur.extractCookieData,UsersController.changePass)
+        .get(secur.extractCookieData,UsersController.getUsers);
+
+      router
+        .route('/api/users/accounts/delete')
+        .post(secur.extractCookieData,UsersController.deleteUser);
     }
 }

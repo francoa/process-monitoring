@@ -73,4 +73,41 @@ module.exports = class UsersDAO {
     });
   };
 
+  static getUsers(req){
+    return new Promise((resolve,reject) => {
+      if (!req.hasOwnProperty('user') || req['user'] === '')
+        return reject({'code':400,'msg':'Cookies error'});
+      DBConfig.isAdmin(req.user.username,function(err){reject(err)},function(admin){
+        if (admin){
+          DBConfig.getUsers(function(err){reject(err)},function(users){resolve(users)});
+        }
+        else
+          return reject({'code':401,'msg':'Unauthorized'});
+      });
+    })
+  }
+
+  static deleteUser(req){
+    return new Promise((resolve,reject) => {
+      var data = req.body;
+      if (!req.hasOwnProperty('user') || req['user'] === '')
+        return reject({'code':400,'msg':'Cookies error'});
+      else if(!data.hasOwnProperty('my_pass') || data['my_pass'] === '')
+        return reject({'code':400,'msg':'Missing password'});
+      else if(!data.hasOwnProperty('username') || data['username'] === '')
+        return reject({'code':400,'msg':'Missing username'});
+      else{
+        DBConfig.verifyUsernamePassword(req.user.username,data.my_pass,function(err){reject(err);},
+          function(admin){
+            if (admin){
+              DBConfig.deleteUser(data.username,function(err){reject(err);},
+                function(){resolve();});
+            }
+            else
+              return reject({'code':401,'msg':'Unauthorized'});
+        });  
+      }
+    })
+  }
+
 }

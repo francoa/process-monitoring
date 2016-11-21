@@ -11,27 +11,49 @@
       /***********************/
       var self = this;
       $scope.UsersDAO = UsersDAO;
+      var newStep = -1;
+      var pasoTemplate = {"id":null, "msg":"","detalle":"","autom":false, "img":null, "fases":[], "numFases":0};
+      var recetaTemplate = {"Nombre":"", "Instrucciones":[]};
+      var stepId = 0;
 
       var activate = function(){
         if (!UsersDAO.isAuthenticated() || !UsersDAO.isAdmin())
           UsersDAO.redirect();
       };
-      activate();
 
-      $scope.username = UsersDAO.getUserName();
-      $scope.user = {'username':''};
-      $scope.user.username = $scope.username;
+      var init = function(){
+        $scope.username = UsersDAO.getUserName();
+        /*RecipeDAO.getRecipesNames().then(function(data){
+          $scope.listaRecetas = data.data.recipes;
+        }).catch(function(err){
+          $window.alert("No se ha podido obtener la lista de usuarios");
+        });*/
+        $scope.listaRecetas = RecipeDAO.getRecipesNames();
 
-      $scope.sortType     = 'date'; // set the default sort type
-      $scope.sortReverse  = true;  // set the default sort order
-      var newStep = -1;
-      $scope.btnMsg = "Agregar";
-      $scope.listaRecetas = RecipeDAO.getRecipesNames();
-      $scope.logs = RecipeDAO.getLogs();
-      var pasoTemplate = {"id":null, "msg":"","detalle":"","autom":false, "img":null, "fases":[], "numFases":0};
-      var recetaTemplate = {"Nombre":"", "Instrucciones":[]};
-      var stepId = 0;
-      $scope.paso = angular.copy(pasoTemplate);
+        /*RecipeDAO.getLogs().then(function(data){
+          $scope.logs = data.data.logs;
+        }).catch(function(err){
+          $window.alert("No se ha podido obtener la lista de usuarios");
+        });*/
+        $scope.logs = RecipeDAO.getLogs();
+
+        UsersDAO.getUsers().then(function(data){
+          $scope.beerUsers = data.data.users;
+        }).catch(function(err){
+          $window.alert("No se ha podido obtener la lista de usuarios");
+        });
+
+        console.log($scope.beerUsers);
+
+        $scope.user = {'username':''};
+        $scope.user.username = $scope.username;
+        $scope.sortType     = 'date'; // set the default sort type
+        $scope.sortReverse  = true;  // set the default sort order
+        $scope.btnMsg = "Agregar";
+        $scope.paso = angular.copy(pasoTemplate);
+      }
+      
+
       /***********************/
       /**     VARIABLES     **/
       /***********************/
@@ -205,6 +227,35 @@
       /******************/
       /**     LOGS     **/
       /******************/
+
+      /******************/
+      /**     USERS    **/
+      /******************/
+      $scope.listUsers=function(){
+        hideAll();
+        $('#listOfUsers').show();
+      };
+
+      var uN, uI;
+
+      $scope.deleteUser=function(userName,index){
+        $("#password-modal").modal();
+        uN = userName;
+        uI = index;
+      };
+
+      $scope.deleteU=function(pass){
+        $("#password-modal").modal('hide');
+        UsersDAO.deleteUser(uN,pass).then(function(){
+            $window.alert("Usuario eliminado con éxito");
+            $scope.beerUsers.splice(uI,1);
+          }).catch(function(err){
+            $window.alert("No se pudo eliminar el usuario");
+          })
+      }
+      /******************/
+      /**     USERS    **/
+      /******************/
       
       /*******************/
       /**     MODALS    **/
@@ -261,6 +312,9 @@
         $('#recipeForm').hide();
         $('#listOfCooks').hide();
       };
+
+      activate();
+      init();
 
     }]);
 }(window.angular));

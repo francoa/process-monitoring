@@ -32,6 +32,7 @@
             <a href="#" ng-click="popupModal('rcpName-modal')"><i class="fa fa-fw fa-plus"></i> Crear receta </a>
             <a href="#" ng-click="popupModal('recipe-modal')"><i class="fa fa-fw fa-wrench"></i> Trabajar en recetas </a>
             <a href="#" ng-click="listCooking()"><i class="fa fa-fw fa-list"></i> Lista de cocinadas </a>
+            <a href="#" ng-click="listUsers()"><i class="fa fa-fw fa-list"></i> Lista de usuarios </a>
             <!--a href="#" ng-click="supervision()"><i class="fa fa-fw fa-eye"></i> Supervisión proceso </a-->
           </li>
         </ul>
@@ -159,6 +160,31 @@
               </div>
             </div>
         </div>
+
+        <div class="col-lg-8">
+            <div class="table-responsive" id="listOfUsers" style="display: none;">
+              <h1 class="page-header">Lista de Usuarios</h1>
+              <div class="panel panel-default">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Manager</th>
+                            <th>Eliminar usuario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in beerUsers" >
+                            <td width="50%">{{ x.username }}</td>
+                            <td width="30%">{{ x.admin }}</td>
+                            <td width="20%" align="center"><a href="#" ng-click="deleteUser(x.username,$index)" ng-if="x.username != username"><i class="fa fa-fw fa-trash"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -203,6 +229,19 @@
         <form name="rcpNameForm">
           <input type="text" id="rcpNameInputModal" ng-model="recetaNombre" key-binding="createRecipe(recetaNombre)" key="13" required>
           <button type="button" class="btn btn-primary btn-block" ng-click="createRecipe(recetaNombre)" ng-disabled="rcpNameForm.$invalid"> Crear </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal container -->
+  <div class="modal fade" id="password-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="slidemodal-container">
+        <h1>Ingrese contraseña</h1><br>
+        <form name="passForm">
+          <input type="password" id="passwordInputModal" ng-model="passInput" key-binding="deleteU(passInput)" key="13" required>
+          <button type="button" class="btn btn-primary btn-block" ng-click="deleteU(passInput)" ng-disabled="passForm.$invalid"> Borrar usuario </button>
         </form>
       </div>
     </div>

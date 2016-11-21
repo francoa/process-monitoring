@@ -32,6 +32,7 @@
             <a href="#" ng-click="popupModal('rcpName-modal')"><i class="fa fa-fw fa-plus"></i> Crear receta </a>
             <a href="#" ng-click="popupModal('recipe-modal')"><i class="fa fa-fw fa-wrench"></i> Trabajar en recetas </a>
             <a href="#" ng-click="listCooking()"><i class="fa fa-fw fa-list"></i> Lista de cocinadas </a>
+            <a href="#" ng-click="listUsers()"><i class="fa fa-fw fa-list"></i> Lista de usuarios </a>
             <!--a href="#" ng-click="supervision()"><i class="fa fa-fw fa-eye"></i> Supervisión proceso </a-->
           </li>
         </ul>
@@ -159,6 +160,31 @@
               </div>
             </div>
         </div>
+
+        <div class="col-lg-8">
+            <div class="table-responsive" id="listOfUsers" style="display: none;">
+              <h1 class="page-header">Lista de Usuarios</h1>
+              <div class="panel panel-default">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Manager</th>
+                            <th>Eliminar usuario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in users" >
+                            <td width="50%">{{ x.date }}</td>
+                            <td width="30%">{{ x.name }}</td>
+                            <td width="20%" align="center"><a href="#" ng-click="deleteUser(x.name)"><i class="fa fa-fw fa-delete"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+
       </div>
     </div>
   </div>

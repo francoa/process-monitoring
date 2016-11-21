@@ -8,10 +8,10 @@ var exists = fs.existsSync(dbConst.dir);
 var db = new sqlite3.Database(dbConst.dir);
 
 module.exports = class DBConfig {
-    static init(errCbck) {
+    static init(errCbck,callback) {
     	var errorFn = function(err){
     		if (err!=null){
-				errCbck(err);
+				errCbck({'code':500, 'msg':err.Error});
 				return;
 			};
     	}
@@ -22,17 +22,21 @@ module.exports = class DBConfig {
 				db.exec("CREATE TABLE Table_Users (username TEXT NOT NULL UNIQUE, \
 					password TEXT NOT NULL, salt TEXT NOT NULL, isAdmin \
 					BOOLEAN NOT NULL);", errorFn);
-				DBConfig.createUser("admin","admin",true,errCbck);
-	      	};
+				DBConfig.createUser("admin","admin",true,errCbck,callback);
+	      	}
+            else if (callback!=undefined)
+                callback();
       	});
-    }
+    };
 
-    static createUser(username,password,isAdmin,errCbck) {
+    static createUser(username,password,isAdmin,errCbck,callback) {
 		var errorFn = function(err){
     		if (err!=null){
-				errCbck(err);
+				errCbck({'code':500, 'msg':err.Error});
 				return;
-			};
+			}
+            else if (callback!=undefined)
+                callback();
     	};
 
     	var create = function(ret){
@@ -43,18 +47,22 @@ module.exports = class DBConfig {
 					db.run("INSERT INTO Table_Users VALUES (?,?,?,?);",
 						[username,pass.pass,pass.salt,adm], errorFn);
     			});
-    		};
+    		}
+            else
+                errCbck({'code':403,'msg':'Username already taken'})
     	};
 
-    	DBConfig.verifyUsername(username,create,errCbck);
+    	DBConfig.usernameAvailable(username,errCbck,create);
   	}
 
-    static deleteUser(username,errCbck){
+    static deleteUser(username,errCbck,callback){
     	var errorFn = function(err){
     		if (err!=null){
-				errCbck(err);
+				errCbck({'code':500, 'msg':err.Error});
 				return;
-			};
+			}
+            else if (callback != undefined)
+                callback();
     	};
 
 		db.serialize(function(){
@@ -62,26 +70,28 @@ module.exports = class DBConfig {
 		})
     }
 
-    static changePassword(username,password,errCbck){
+    static changePassword(username,password,errCbck,callback){
 		var errorFn = function(err){
     		if (err!=null){
-				errCbck(err);
+				errCbck({'code':500, 'msg':err.Error});
 				return;
-			};
+			}
+            else if (callback != undefined)
+                callback();
     	};
 
     	var pass = secur.hash(password);
     	db.serialize(function(){
-    		db.run("UPDATE Table_Users SET password=?,salt=? WHERE username=?",
+    		db.run("UPDATE Table_Users SET password=?,salt=? WHERE username==?",
     			[pass.pass,pass.salt,username],errorFn);
     	})
     }
 
-    static verifyUsername(username,callback,errCbck){
+    static usernameAvailable(username,errCbck,callback){
     	var rowReturnFn = function(err,row){
 	    	var ret = false;
     		if (err!=null){
-    			errCbck(err);
+    			errCbck({'code':500, 'msg':err.Error});
     		}
     		else if (row == undefined)
 				callback(true);
@@ -94,14 +104,10 @@ module.exports = class DBConfig {
     	})
     }
 
-    static verifyUsernamePassword(username,password,callback,errCbck){
+    static verifyUsernamePassword(username,password,errCbck,callback){
         var rowReturnFn = function(err,row){
-            console.log(err);
-            console.log(row);
-            if (err!=null){
-                console.log("Here's error! (joke)")
+            if (err!=null)
                 errCbck({'code':500, 'msg':err.Error});
-            }
             else if (row == undefined)
                 errCbck({'code':401, 'msg':"No such username"});
             else{
@@ -109,17 +115,30 @@ module.exports = class DBConfig {
                 var salt = row['salt'];
                 var secPass = secur.hash(password, salt);
                 if (secPass['pass'] !== pass)
-                    errCbck({'code':401, 'msg':"Wrong email or password"});
-                else{
-                    console.log(row['isAdmin']);
+                    errCbck({'code':401, 'msg':"Wrong username or password"});
+                else
                     callback(row['isAdmin']);
-                }
             }
         };
 
 
         db.serialize(function(){
           db.get("SELECT password,salt,isAdmin FROM Table_Users WHERE username==?",username,rowReturnFn);  
+        })
+    }
+
+    static isAdmin(username,errCbck,callback){
+        var rowReturnFn = function(err,row){
+           if (err!=null)
+                errCbck({'code':500, 'msg':err.Error});
+            else if (row == undefined)
+                errCbck({'code':401, 'msg':"No such username"});
+            else
+                callback(row['isAdmin']);
+        };
+
+        db.serialize(function(){
+            db.get("SELECT isAdmin FROM Table_Users WHERE username==?",username,rowReturnFn);
         })
     }
 

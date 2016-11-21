@@ -4,7 +4,7 @@ var cookies = require('cookies');
 var crypto = require('crypto');
 var keygrip = require('keygrip');
 var keys = keygrip(["Franco", "Beer"]);
-const cookieName = "BeerCookiesUserName";
+const cookieName = "BeerCookies";
 
 exports.cookKeys = keys;
 
@@ -25,22 +25,18 @@ exports.hash = function (pwd, salt) {
     return temp;
 };
 
-/**
- * TODO : verificar esta función
- * Extracts the cookies from the HTTP request header
- * @param {Object} req: The HTTP request's headers
- * @param {Object} res: The HTTP request's response headers
- * @param {Function} next: Function that executes next
- * @returns {callback} Runs next function.
- */
+
 exports.extractCookieData = function (req, res, next) {
 
     var cook = new cookies(req, res, {keys:keys});
-    var user = cook.get(cookieName);
-
-    if (user) {
-        req.username = user;
+    try{
+        var user = JSON.parse(decodeURIComponent(cook.get(cookieName)));
+        if (user) {
+            req.user = user;
+        }
     }
+    catch(err){}
+
 /*    else {
         var err
         throw ()
@@ -49,10 +45,11 @@ exports.extractCookieData = function (req, res, next) {
     return next();
 };
 
-exports.setCookieData = function(req,res,username){
-    var cook = new cookies(req, res, secur.cookKeys);
-    cook.set(cookieName, username, {signed: true, maxAge: 9000000});
-}
+/*exports.setCookieData = function(req,res,username,admin){
+    var cook = new cookies(req, res, {keys:keys});
+    var obj = {'username':username, 'admin':admin}
+    cook.set(cookieName, JSON.stringify(obj), {signed: true, maxAge: 9000000});
+}*/
 
 exports.clearCookieData = function(res){
     res.clearCookie(cookieName);

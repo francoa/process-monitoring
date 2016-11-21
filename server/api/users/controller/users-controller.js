@@ -8,46 +8,59 @@ module.exports = class UsersController {
     UsersDAO
       .logout(req)
       .then(function(){
-        secur.clearCookieData(res);
-        res.sendStatus(200);
+        try{
+          secur.clearCookieData(res);
+          res.sendStatus(200);
+        }catch(err){
+          throw({'code':500,'msg':err});
+        }
       })
-      .catch(err => res.status(err.code).send(err.msg));
+      .catch(function(err){
+        console.log(err.msg);
+        res.status(err.code).send(err.msg); 
+      });
   }
 
   static login(req,res) {
     UsersDAO
       .login(req)
-      .then(function(username,admin){
-        secur.setCookieData(req,res,username);
-        if (admin)
-          res.status(200).send({'username': username, 'admin': true});
-        else
-          res.status(200).send({'username': username, 'admin': false});
+      .then(function(user){
+        try{
+          //secur.setCookieData(req,res,user.username);
+          if (user.admin)
+            res.status(200).send({'username': user.username, 'admin': true});
+          else
+            res.status(200).send({'username': user.username, 'admin': false});
+        }catch(err){
+          throw({'code':500,'msg':err});
+        }
       })
-      .catch(err => res.status(err.code).send(err.msg));
+      .catch(function(err){
+        console.log(err.msg);
+        res.status(err.code).send(err.msg);
+      });
   }
 
   static register(req, res) {
     UsersDAO
-      .register()
-      .then()
-      .catch();
+      .register(req)
+      .then(function(){
+        res.sendStatus(200);
+      })
+      .catch(function(err){
+        console.log(err.msg);
+        res.status(err.code).send(err.msg);
+      });
   }
 
   static changePass(req, res) {
     UsersDAO
-      .changePass()
-      .then()
-      .catch();
+      .changePass(req)
+      .then(function(){res.sendStatus(200)})
+      .catch(function(err){
+        console.log(err.msg);
+        res.status(err.code).send(err.msg);
+      });
   }  
-
-  /*static createBeer(req, res) {
-      let _beer = req.body;
-
-      BeerDAO
-        .createBeer(_beer)
-        .then(beer => res.status(201).json(beer))
-        .catch(error => res.status(400).json(error));
-  }*/
 
 }

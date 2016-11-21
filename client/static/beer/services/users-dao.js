@@ -9,40 +9,40 @@
       });
 
       /***  FUNCIONES   ***/
-      var cookieName = 'authAcc';
+      var cookieName = 'BeerCookies';
 
-      function registerSuccessFn(data, status, headers, config) {
+      function registerSuccessFn(data) {
         $window.alert("El usuario ha sido registrado con éxito.");
       };
 
-      function registerErrorFn(data, status, headers, config) {
-        $window.alert("No se ha podido registrar el usuario.");
+      function registerErrorFn(data) {
+        $window.alert("No se ha podido registrar el usuario. " + data.statusText);
       };
 
-      function loginSuccessFn(data, status, headers, config) {
+      function loginSuccessFn(data) {
         api.setAuthenticatedAccount(data.data);
         api.redirect();
       };
 
-      function loginErrorFn(data, status, headers, config) {
-        $window.alert("Usuario o contraseña incorrectas. Verifique sus datos. "+ data)
+      function loginErrorFn(data) {
+        $window.alert("Usuario o contraseña incorrectas. Verifique sus datos. " + data.statusText)
       };
 
-      function logoutSuccessFn(data, status, headers, config) {
+      function logoutSuccessFn(data) {
         api.unauthenticate();
         $window.location = '/';
       };
 
-      function logoutErrorFn(data, status, headers, config) {
-        $window.alert("Error en logout.")
+      function logoutErrorFn(data) {
+        $window.alert("Error en logout. " + data.statusText)
       };
 
-      function updateSuccessFn(data, status, headers, config) {
+      function updateSuccessFn(data) {
         $window.alert("Cambios realizados con éxito.")
       };
 
-      function updateErrorFn(data, status, headers, config) {
-        $window.alert("Error en los cambios.")
+      function updateErrorFn(data) {
+        $window.alert("Error en los cambios. " + data.statusText)
       };
       /***  FUNCIONES   ***/
 
@@ -62,7 +62,7 @@
             return $http.post('/api/users/accounts/', {
               username: user.username,
               password: user.pass,
-              manager: user.manager
+              admin: user.manager
             }).then(registerSuccessFn, registerErrorFn);
           }
           else
@@ -73,8 +73,7 @@
             return $http.put('/api/users/accounts/', {
               username: user.username,
               password: user.oldPass,
-              new_password: user.newPass,
-              confirm_password: user.repeatPass
+              new_password: user.newPass
             }).then(updateSuccessFn, updateErrorFn);
           }
           else
@@ -90,7 +89,7 @@
         },
         isAdmin : function(){
           var account = JSON.parse($cookies.get(cookieName));
-          return account.manager;
+          return account.admin;
         },
         setAuthenticatedAccount : function(account) {
           $cookies.put(cookieName,JSON.stringify(account));
@@ -101,7 +100,7 @@
         redirect : function() {
           try{
             var account = JSON.parse($cookies.get(cookieName));
-            if(account.manager)
+            if(account.admin)
               $window.location = '/admin';
             else
               $window.location = '/monitor';
